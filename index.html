@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="el"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Astro Code Adventures — Classroom Edition | Δημιουργός: Τσιάλος Δημήτριος</title><style>
+:root{font-family:system-ui,'Segoe UI',sans-serif;color:#f7faff;background:#101c3b}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#385c8a,#142544 72%);min-height:100vh}button,input{font:inherit}button{cursor:pointer;border:0}button:disabled{opacity:.45;cursor:not-allowed}.wrap{max-width:1440px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{font-size:27px;font-weight:950;letter-spacing:-1px}.brand span{color:#ffb347}.sub{font-size:12px;color:#b9cbe8}.pill{background:#25385f;border:1px solid #50618a;padding:9px 13px;border-radius:20px}.layout{display:grid;grid-template-columns:260px minmax(350px,1fr) 310px;gap:16px;margin-top:18px}.panel{background:linear-gradient(145deg,#243b66e8,#172749ed);border:1px solid #50658c;border-radius:22px;padding:17px;box-shadow:0 12px 35px #070d2677}.panel h2{font-size:17px;margin:0 0 12px}.tiny{font-size:12px;color:#bdd0ec}.action{background:linear-gradient(135deg,#ffbe54,#ff7d55);color:#372318;font-weight:850;padding:12px 15px;border-radius:13px;box-shadow:0 5px 0 #9d493d}.secondary{background:#354e7c;color:white;padding:11px;border-radius:12px;font-weight:750}.danger{background:#813e5b;color:white;padding:9px;border-radius:10px}.btnrow{display:flex;gap:8px;flex-wrap:wrap}.full{width:100%}input{background:#142544;border:1px solid #61769b;color:white;padding:12px;border-radius:11px;min-width:0;width:100%}.profiles{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.profile{background:#334c75;border:2px solid transparent;color:white;padding:8px 10px;border-radius:10px}.profile.sel{border-color:#ffca6e}.levels{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;max-height:280px;overflow:auto;padding:4px}.level{aspect-ratio:1;border-radius:12px;background:#344e78;color:white;font-weight:850;border:2px solid #536d94}.level.active{background:#ffb65a;color:#34261c;border-color:white}.level.locked{opacity:.35}.level.done{background:#377e78}.stats{display:flex;justify-content:space-between;gap:8px;margin:12px 0}.stat{background:#132547;padding:10px;border-radius:12px;text-align:center;flex:1}.stat b{display:block;font-size:20px;color:#ffd277}.game{padding:12px}.gameheader{display:flex;justify-content:space-between;align-items:center;padding:5px 9px 12px;gap:8px}.gameheader strong{font-size:18px}.scene{position:relative;overflow:hidden;border-radius:18px;background:linear-gradient(#8ed8ff 0%,#b4ecff 48%,#91d2a0 49%,#66a46e 100%);box-shadow:inset 0 0 0 2px #ffffff44}.scene canvas{width:100%;height:auto;display:block;aspect-ratio:1.2}.scene:after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 70px #ffffff40}.hint{background:#1a3155;border-radius:13px;padding:12px;margin-top:12px;color:#d8e7ff;font-size:13px}.commands{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cmd{background:#314d79;border:1px solid #6984af;color:#fff;border-radius:12px;padding:11px 6px;font-size:13px;font-weight:800}.cmd:hover{background:#476a9c}.program{min-height:115px;max-height:240px;overflow:auto;border:2px dashed #7890b1;border-radius:14px;padding:9px;background:#142544;margin:12px 0}.chip{display:inline-flex;align-items:center;gap:5px;margin:3px;background:#486ca0;border-radius:10px;padding:7px 8px;font-size:12px}.chip button{background:#162849;color:#fff;border-radius:7px;padding:2px 6px}.message{margin-top:10px;padding:11px;border-radius:12px;background:#314c72;min-height:42px;font-size:13px}.message.ok{background:#276b57}.message.bad{background:#784359}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:#d5e3fa;margin-top:9px}.legend span{white-space:nowrap}.modal{position:fixed;inset:0;background:#08132bc9;display:none;align-items:center;justify-content:center;padding:20px;z-index:4}.modal.show{display:flex}.modalbox{background:linear-gradient(135deg,#304e7b,#192c52);border:2px solid #9eb7d6;border-radius:25px;padding:28px;text-align:center;max-width:420px;box-shadow:0 25px 90px #0008}.modalbox h1{font-size:30px}.footer{text-align:center;color:#94a8c8;font-size:12px;margin:20px}.muted{opacity:.7}select{background:#142544;color:white;padding:9px;border:1px solid #6b80a3;border-radius:10px}@media(max-width:1080px){.layout{grid-template-columns:230px 1fr}.right{grid-column:1/-1}.commands{grid-template-columns:repeat(3,1fr)}}@media(max-width:680px){.layout{grid-template-columns:1fr}.right{grid-column:auto}.wrap{padding:10px}.brand{font-size:22px}.scene canvas{aspect-ratio:1.15}.commands{grid-template-columns:1fr 1fr}}
+
+/* Ευρύχωρος χώρος προγραμματισμού */
+.layout{grid-template-columns:245px minmax(0,1fr);align-items:start}
+.layout>aside.panel:not(.right){grid-column:1;grid-row:1 / span 2}
+.layout>.game{grid-column:2;grid-row:1}
+.layout>.right{grid-column:2;grid-row:2;min-width:0}
+.right .commands{grid-template-columns:repeat(3,minmax(0,1fr))}
+.right .cmd{min-height:48px;font-size:14px}
+.right .program{min-height:260px;max-height:520px;padding:14px;line-height:2.5}
+.right .chip{font-size:14px;padding:8px 11px;margin:5px}
+.right .btnrow{margin-top:12px}
+@media(min-width:1250px){.layout{grid-template-columns:265px minmax(0,1fr)}.right .commands{grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media(max-width:680px){.layout{grid-template-columns:minmax(0,1fr)}.layout>aside.panel:not(.right),.layout>.game,.layout>.right{grid-column:1;grid-row:auto}.right .commands{grid-template-columns:repeat(2,minmax(0,1fr))}.right .program{min-height:220px;max-height:440px}}
+
+/* Compact top navigation: game and commands visible without sidebar */
+.wrap{max-width:1600px;padding:10px 16px}
+.top{flex-wrap:nowrap;min-height:46px}
+.brand{font-size:23px}
+.sub{font-size:11px}
+.top-tools{display:flex;gap:10px;align-items:flex-start;position:relative;z-index:5;margin-top:8px}
+.tool-details{position:relative;flex:0 1 auto;min-width:0}
+.tool-details>summary{list-style:none;cursor:pointer;border:1px solid #6686b1;background:#304e7b;color:#fff;border-radius:11px;padding:10px 14px;font-weight:800;font-size:14px;user-select:none}
+.tool-details>summary::-webkit-details-marker{display:none}
+.tool-details>summary:after{content:' ▾';color:#ffd47d}
+.tool-details[open]>summary:after{content:' ▴'}
+.tool-content{position:absolute;top:calc(100% + 6px);left:0;width:min(390px,calc(100vw - 32px));max-height:min(72vh,630px);overflow:auto;background:#1d3155;border:1px solid #6986af;border-radius:16px;padding:15px;box-shadow:0 16px 50px #0009}
+#map-panel .tool-content{width:min(460px,calc(100vw - 32px))}
+.tool-content .levels{grid-template-columns:repeat(10,minmax(0,1fr));max-height:none}
+.tool-content .level{border-radius:7px;font-size:12px}
+.tool-content .stats{margin:10px 0}
+.layout,.layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(380px,1fr);gap:12px;margin-top:10px;align-items:start}
+.layout>.game{grid-column:1;grid-row:1;min-width:0}
+.layout>.right{grid-column:2;grid-row:1;min-width:0}
+.panel{padding:12px;border-radius:16px}
+.gameheader{padding:2px 4px 8px}
+.gameheader strong{font-size:16px}
+.scene canvas{max-height:min(65vh,620px);object-fit:contain}
+.right .commands{grid-template-columns:repeat(3,minmax(0,1fr))}
+.right .cmd{min-height:42px;padding:7px 4px;font-size:12px}
+.right .program{min-height:190px;max-height:38vh;margin:8px 0;padding:10px;line-height:1.7}
+.right .chip{padding:6px 8px;margin:3px;font-size:12px}
+.right>p.tiny:first-of-type{margin:5px 0 10px}
+.right h2{margin-bottom:8px}
+.right .btnrow{margin-top:8px}
+.legend{gap:7px;font-size:11px}
+.hint{padding:8px;margin-top:7px}
+@media(max-width:1000px){.layout{grid-template-columns:minmax(0,1fr) minmax(330px,1fr)}.right .commands{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:740px){.top{flex-wrap:wrap}.layout{grid-template-columns:minmax(0,1fr)}.layout>.game{grid-column:1;grid-row:1}.layout>.right{grid-column:1;grid-row:2}.top-tools{flex-wrap:wrap}.scene canvas{max-height:55vh}.right .commands{grid-template-columns:repeat(3,minmax(0,1fr))}.right .program{min-height:180px;max-height:42vh}}
+@media(max-width:420px){.right .commands{grid-template-columns:repeat(2,minmax(0,1fr))}.tool-details>summary{padding:9px 10px;font-size:12px}}
+
+/* Command editor with insert slots and execution highlighting */
+.right .program{display:flex;flex-direction:column;gap:2px;max-height:42vh;min-height:200px;line-height:1.3;padding:8px}
+.program .chip{display:flex;justify-content:space-between;align-items:center;width:100%;margin:0;padding:8px 10px;border:2px solid transparent;cursor:pointer;gap:8px}
+.program .chip.selected{border-color:#ffe279;background:#486eaa}
+.program .chip.executing{background:#fbd35a;color:#152344;border-color:#fff;box-shadow:0 0 0 3px #ffd35c55}
+.program .chip .chiptext{flex:1}
+.program .chip button{min-width:28px;min-height:28px}
+.insert-slot{height:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:8px;color:#b8d6fa;background:#142544;border:1px dashed #52729a;font-size:15px;font-weight:bold;flex-shrink:0}
+.insert-slot.selected{height:28px;background:#1f685c;color:#fff;border:2px solid #6bf4c8}
+.insert-slot:hover{height:28px;background:#246a68}
+.execution{padding:9px 12px;background:#0e2548;border:1px solid #56749e;border-radius:10px;font-size:13px;font-weight:750;margin:5px 0}
+#suit{width:100%;margin-top:7px}
+@media(min-width:850px){.right .program{max-height:46vh}}
+
+/* Improved themed level and teacher dashboard */
+.scene{border:4px solid #8fe9cb;box-shadow:0 12px 35px #091c3860,inset 0 0 0 2px #fff7}
+.teacher-modal{position:fixed;inset:0;z-index:20;background:#071529e8;display:none;align-items:center;justify-content:center;padding:16px}
+.teacher-modal.open{display:flex}.teacher-box{background:#1b3156;border:2px solid #76c8ed;border-radius:20px;padding:20px;width:min(1040px,98vw);max-height:94vh;overflow:auto}
+.teacher-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:9px;margin:15px 0}.teacher-level{background:#2e5076;color:#fff;border:2px solid #638caf;border-radius:12px;padding:9px;min-height:65px}.teacher-level.selected{border-color:#ffce61;background:#6a583e}.teacher-preview{display:flex;gap:20px;flex-wrap:wrap;align-items:start}.teacher-preview>div{flex:1;min-width:190px}.teacher-box{width:min(1250px,99vw)}.teacher-preview canvas{width:min(650px,100%);height:auto;background:#eaf5fa;border-radius:12px}.teacher-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.teacher-controls button{padding:10px 14px;border-radius:10px;background:#426795;color:white;font-weight:700}
+
+.teacher-lock{position:fixed;inset:0;background:#061329ed;z-index:35;display:none;align-items:center;justify-content:center;padding:16px}.teacher-lock.open{display:flex}.pin-box{width:min(410px,100%);background:#203b66;border:2px solid #82d9fc;border-radius:22px;padding:25px;box-shadow:0 25px 80px #0008}.pin-box h2{margin:0 0 12px}.pin-box p{color:#c8dcf5;font-size:14px;line-height:1.5}.pin-actions{display:flex;gap:9px;margin-top:12px}.pin-actions button{flex:1}.pin-error{min-height:20px;color:#ffb4bc;font-weight:700;font-size:13px;margin-top:9px}.teacher-world{margin:14px 0 5px;color:#a9e9ff;font-size:16px}.teacher-level{transition:transform .15s,background .15s}.teacher-level:hover{transform:translateY(-2px);background:#426e9c}.teacher-preview canvas{border:3px solid #8fd8ec;box-shadow:0 12px 32px #071a35}
+
+/* Classroom Edition: stronger contrast, clear focus, spacious command editor */
+:root{color-scheme:dark} .wrap{max-width:1560px;padding:12px 18px}
+.top{padding:7px 5px 10px}.top-tools{margin-top:7px!important}
+.layout{gap:12px!important;margin-top:10px!important}
+.panel{border-color:#829bc2;box-shadow:0 12px 30px #06122b70}
+.game{min-width:0}.right{min-width:0}
+.scene{border:3px solid #b1e9ff;box-shadow:0 0 0 4px #10264b,0 14px 32px #07172d90}
+.scene canvas{max-height:min(67vh,700px);object-fit:contain}
+.program{min-height:225px!important;max-height:42vh!important;background:#0d213f;border:2px solid #86baf2;padding:12px}
+.chip{font-size:14px!important;min-height:36px;border:1px solid #8cb7e4;cursor:pointer}
+.chip.executing{background:#ffce57!important;color:#172741!important;box-shadow:0 0 0 3px #fff3a9}
+.chip.executing button{color:#fff}
+.insert-slot{min-width:36px;min-height:32px}
+.insert-slot.selected{outline:2px solid #ffe08a;outline-offset:2px}
+button:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #ffda73;outline-offset:3px}
+button:hover:not(:disabled){filter:brightness(1.12)}
+.teacher-preview canvas{display:block;max-height:66vh;object-fit:contain;background:#eaf6ff}
+.teacher-level{font-size:13px;line-height:1.35}
+.teacher-level.selected{background:#755724;border-color:#ffe59b;box-shadow:0 0 0 2px #fff4c4}
+#teacher-info{line-height:1.7;color:#e1f3ff}
+@media(min-width:900px){.layout{grid-template-columns:minmax(0,1.25fr) minmax(370px,.85fr)!important}.right{grid-column:2!important}.game{grid-column:1!important}}
+@media(max-width:899px){.layout{grid-template-columns:1fr!important}.game,.right{grid-column:1!important}.program{max-height:40vh!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Classroom polish */
+@media(min-width:1081px){.layout{grid-template-columns:minmax(0,1.12fr) minmax(365px,.88fr)}.right{grid-column:auto}.program{max-height:330px;min-height:185px}.scene canvas{max-height:min(68vh,660px);object-fit:contain}}
+@media(min-width:681px) and (max-width:1080px){.layout{grid-template-columns:minmax(0,1fr) minmax(340px,.85fr)}.right{grid-column:auto}.program{max-height:300px;min-height:160px}}
+button:focus-visible,summary:focus-visible,select:focus-visible{outline:3px solid #ffe28c;outline-offset:3px}
+
+/* Classroom polish: clearer hierarchy, responsive editor, accessible focus */
+:root{color-scheme:dark}button:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #ffe276;outline-offset:3px}
+.panel{background:linear-gradient(155deg,#294976,#192f55);border-color:#6e91bb;box-shadow:0 14px 38px #08172e77}
+.game{background:linear-gradient(160deg,#254d79,#18365e)}.right{background:linear-gradient(160deg,#2d4674,#1b3159)}
+.scene{border:3px solid #b4e8ff;box-shadow:0 8px 26px #071b34aa,inset 0 0 0 2px #ffffff55}
+.cmd{background:linear-gradient(160deg,#436a9e,#294975);border:1px solid #90b7e0;min-height:49px;transition:transform .12s,background .12s}.cmd:hover{transform:translateY(-2px);background:#537db0}
+.program{border:2px dashed #a5c6e8;background:#0f2547;min-height:220px;max-height:380px}
+.chip{background:#3b6297;border:1px solid #8eb5e0;font-weight:750}.chip.executing{background:#ffe17b!important;color:#21304a!important;border:2px solid #fff;box-shadow:0 0 0 3px #ffb84577}
+.insert-slot{min-height:25px}.insert-slot.selected{outline:2px solid #ffe07a}
+.teacher-level:hover,.action:hover,.secondary:hover{filter:brightness(1.12)}
+@media(min-width:1081px){.layout{grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr)}.scene canvas{max-height:64vh}.right .program{max-height:42vh}}
+@media(max-width:740px){.program{min-height:160px;max-height:42vh}}
+@media(prefers-reduced-motion:reduce){.cmd,.teacher-level{transition:none!important}*{scroll-behavior:auto!important}}
+
+/* Larger classroom game board and always-visible teacher entry */
+.wrap{max-width:1800px;padding:12px 16px}
+.top{gap:10px}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+#teacher-open{padding:10px 15px;white-space:normal;line-height:1.25;background:linear-gradient(135deg,#277bb2,#4261b5);border:1px solid #92dafa;box-shadow:0 3px 12px #091a3566}
+.layout{grid-template-columns:minmax(0,1.65fr) minmax(330px,.75fr)!important;gap:12px!important;margin-top:8px!important}
+.layout>.game{grid-column:1!important;grid-row:1!important}
+.layout>.right{grid-column:2!important;grid-row:1!important}
+.game{padding:10px}
+.scene canvas{width:100%;height:auto;max-height:none!important;object-fit:fill!important;aspect-ratio:850 / 710!important}
+.scene{max-width:none}
+@media(max-width:1050px){.layout{grid-template-columns:minmax(0,1.25fr) minmax(300px,.85fr)!important}}
+@media(max-width:780px){.layout{grid-template-columns:minmax(0,1fr)!important}.layout>.game{grid-column:1!important;grid-row:1!important}.layout>.right{grid-column:1!important;grid-row:2!important}.header-actions{justify-content:flex-start}.top{align-items:flex-start}.scene canvas{max-height:none!important}}
+@media(max-width:480px){.wrap{padding:8px}.header-actions{width:100%}#teacher-open{flex:1}.gameheader{flex-wrap:wrap}}
+
+/* Profile and mission map sit in the top header, next to teacher access. */
+.top{align-items:center;flex-wrap:wrap;position:relative;z-index:12}
+.header-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.header-actions .top-tools{display:flex;align-items:center;gap:8px;margin-top:0;position:relative;z-index:15;order:0}
+.header-actions #teacher-open{order:1}
+.header-actions #who{order:2}
+.header-actions .tool-details>summary{padding:11px 14px;min-height:43px;display:flex;align-items:center;white-space:nowrap}
+.header-actions .tool-content{z-index:100;top:calc(100% + 8px)}
+#profile-panel .tool-content{left:0}
+#map-panel .tool-content{left:auto;right:0}
+@media(max-width:1050px){.top{align-items:flex-start}.header-actions{justify-content:flex-start;width:100%}}
+@media(max-width:580px){.header-actions .top-tools{width:100%;display:grid;grid-template-columns:1fr 1fr}.header-actions .tool-details>summary{justify-content:center;font-size:12px;padding:9px 7px;white-space:normal;text-align:center}.header-actions #teacher-open{flex:1}.header-actions #who{font-size:12px}.header-actions .tool-content{width:min(390px,calc(100vw - 20px))}#map-panel .tool-content{right:0;width:min(460px,calc(100vw - 20px))}}
+
+/* Polished cartoon board: clearer top tools, larger visible play area */
+.top-tools{position:relative;z-index:5}
+.tool-details>summary{font-weight:800;letter-spacing:.1px}
+.scene{background:#eaf7ff;border-radius:18px;overflow:hidden}
+.scene canvas{display:block;width:100%;height:auto;max-height:75vh!important;object-fit:contain}
+.game .panel-title,.game h2{letter-spacing:.2px}
+@media(min-width:1050px){.layout{grid-template-columns:minmax(0,1.38fr) minmax(340px,.82fr)!important}}
+@media(max-width:899px){.layout{grid-template-columns:1fr!important}}
+
+/* Run sits in the former jump-command position. */
+.commands .cmd-run{min-height:52px;background:linear-gradient(135deg,#22c55e,#059669);color:white;border:2px solid #bbf7d0;font-weight:900;box-shadow:0 5px 0 #047857;cursor:pointer}
+.commands .cmd-run:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.commands .cmd-run:active{transform:translateY(3px);box-shadow:0 2px 0 #047857}
+
+/* Clean, colorful classroom interface */
+body{background:radial-gradient(ellipse at 10% 0%,#3e779c,#142b50 70%)}
+.panel{border-color:#7798bc;border-radius:23px;box-shadow:0 15px 36px #071a3055}
+.scene{border:3px solid #8bcbe6;box-shadow:0 8px 30px #071b3266;border-radius:22px}
+.gameheader{padding-top:8px}
+.gameheader strong{font-size:20px}
+.cmd{transition:transform .15s,background .15s;border-color:#87a9d0}
+.cmd:hover{transform:translateY(-2px)}
+.cmd-run{background:linear-gradient(135deg,#57d89a,#1da870)!important;color:#083e30!important;font-weight:900!important;border-radius:13px}
+.tool-details>summary{border-radius:14px}
+
+/* Drag-and-drop insertion replaces clicking the plus button */
+.insert-slot{height:19px!important;min-height:19px!important;cursor:default!important;background:transparent!important;border:1px dashed #52729a88!important;color:#8eb7dc!important;font-size:12px!important;transition:background .12s,height .12s;pointer-events:auto}
+.insert-slot.selected{outline:none!important}
+.insert-slot.drop-target{height:40px!important;min-height:40px!important;background:#207967!important;border:2px dashed #c2ffe4!important;color:#fff!important}
+.cmd[data-cmd],.program .chip{cursor:grab;touch-action:none;user-select:none}
+.cmd[data-cmd]:active,.program .chip:active{cursor:grabbing}
+.being-dragged{opacity:.42}
+.drag-ghost{position:fixed;z-index:9999;pointer-events:none;background:#ffdc77;color:#19314e;padding:12px 18px;border-radius:12px;border:2px solid white;box-shadow:0 12px 30px #0008;font-weight:900;max-width:230px}
+
+/* Child-friendly pseudo-3D polish; still a precise, flat programming grid */
+.scene{border:3px solid #a8e5fa;box-shadow:0 16px 38px #081b3670,inset 0 3px 0 #ffffff90}
+.scene canvas{filter:saturate(1.08) contrast(1.025)}
+.top-tools summary,.header-actions>button{box-shadow:0 5px 0 #0a1c3555}
+.levels{grid-template-columns:repeat(10,minmax(0,1fr));gap:5px}
+.level{border-radius:8px;font-size:12px;min-width:0}
+.teacher-grid{grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}
+@media(max-width:620px){.levels{grid-template-columns:repeat(8,minmax(0,1fr))}}
+
+/* Classroom-friendly polish, all five worlds keep legible paths. */
+:root{--game-accent:#3d9bd8}
+.tool-details>summary{border-radius:14px;transition:filter .15s,transform .15s}
+.tool-details>summary:hover{filter:brightness(1.045)}
+button:focus-visible,summary:focus-visible{outline:3px solid #ffbf47!important;outline-offset:3px}
+#program .chip{box-shadow:0 3px 0 #133c5b1f,0 5px 13px #133c5b13}
+#program .insert-slot.drop-target{background:#c6ffdf!important;outline:3px dashed #19a65b;min-height:22px}
+#canvas{filter:drop-shadow(0 8px 15px #204b6b22)}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+ 
+.reward-shop{margin-top:12px;background:#152a4e;border:1px solid #5274a3;border-radius:14px;padding:11px}
+.reward-heading{font-weight:900;color:#ffe18a;margin-bottom:6px}
+.accessory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}
+.accessory{min-height:48px;cursor:pointer;transition:transform .15s ease,border-color .15s ease;background:#2a4268;color:#fff;border:2px solid #5a7195;border-radius:11px;padding:8px 4px;font-size:12px;font-weight:750}
+.accessory:not(:disabled):hover{transform:translateY(-2px)}
+.accessory.active{border-color:#ffd54e;background:#45694f}
+.accessory:disabled{opacity:.52}
+.level-reward{padding:6px 10px;margin:0 8px 5px;border-radius:9px;background:#30466a;font-size:13px;font-weight:800;color:#ffdd87}
+.reward-earned{font-weight:900;font-size:22px;color:#ffdb65;margin:8px}
+
+[data-cmd],#program .chip{touch-action:none;user-select:none;-webkit-user-select:none}
+.drag-ghost{position:fixed;z-index:99999;pointer-events:none;background:#fce7a1;color:#20334f;border:3px solid #ffb21e;border-radius:14px;padding:12px 17px;font-size:16px;font-weight:900;box-shadow:0 12px 30px #091b4777;white-space:nowrap}
+#program .insert-slot{min-height:26px!important;min-width:36px!important}
+#program .insert-slot.drop-target{min-height:38px!important;background:#55e7a8!important;outline:3px solid #147a50!important}
+
+/* 3D perspective stage: genuine CSS 3D transformations with layered board elevation */
+.view-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:5px 6px 9px;font-size:13px;font-weight:900;color:#bff7ee}
+.view-controls button{background:#274f75;color:#fff;border:1px solid #83d9ed;border-radius:10px;padding:8px 12px;font-weight:800}
+.stage-3d{perspective:1150px;perspective-origin:50% 40%;padding:14px 7px 58px;overflow:visible;filter:drop-shadow(0 24px 18px #050e2388)}
+.stage-3d .scene{position:relative;transform:rotateX(24deg) rotateZ(-2deg) translateZ(18px);transform-style:preserve-3d;transform-origin:50% 55%;transition:transform .45s cubic-bezier(.2,.8,.2,1);overflow:visible;border:5px solid #d8ffff;border-radius:18px;background:#294f65;box-shadow:0 7px 0 #416f79,0 15px 0 #24495c,0 23px 0 #15334b,0 34px 30px #06182a9c,inset 0 0 0 3px #fff9}
+.stage-3d .scene canvas{border-radius:13px;max-height:none!important;width:100%;height:auto;object-fit:fill}
+.stage-3d .scene:after{border-radius:13px;box-shadow:inset 0 0 24px #fff4}
+.stage-3d.top-down{padding-bottom:10px}
+.stage-3d.top-down .scene{transform:none;box-shadow:0 12px 30px #06182a8c}
+.game{overflow:visible}
+@media(max-width:740px){.stage-3d{perspective:1000px;padding:10px 5px 35px}.stage-3d .scene{transform:rotateX(17deg) rotateZ(-1deg)}}
+@media(prefers-reduced-motion:reduce){.stage-3d .scene{transition:none}}
+
+.astro-3d-view{width:100%;aspect-ratio:850/710;min-height:310px;position:relative;overflow:hidden;border-radius:14px}
+.stage-3d .astro-3d-view canvas{display:block;width:100%!important;height:100%!important;max-height:none!important;aspect-ratio:auto!important;object-fit:fill!important}
+.astro-3d-teacher{width:min(650px,100%);aspect-ratio:850/710;min-height:280px;overflow:hidden;border-radius:12px}
+.astro-3d-teacher canvas{display:block;width:100%!important;height:100%!important}
+.stage-3d.real-webgl{padding:0;perspective:none;filter:none}
+.stage-3d.real-webgl .scene{transform:none!important;box-shadow:0 10px 28px #0007;overflow:hidden}
+
+#collision-toast{position:fixed;top:18px;left:50%;transform:translate(-50%,-130%);z-index:99999;pointer-events:none;max-width:min(560px,90vw);background:linear-gradient(135deg,#a71f3d,#e34b55);color:white;border:3px solid #ffe29a;border-radius:18px;padding:17px 25px;box-shadow:0 15px 35px #170e2b99;font-size:clamp(17px,2vw,24px);font-weight:900;text-align:center;opacity:0;transition:transform .25s,opacity .25s}
+#collision-toast.visible{transform:translate(-50%,0);opacity:1}
+.astro-3d-view{background:linear-gradient(180deg,#98e1ff,#c8efff)}
+
+.view-controls{background:linear-gradient(110deg,#1d365c,#28516e);border:1px solid #5984a0;border-radius:12px;padding:8px 11px;box-shadow:0 5px 14px #06162c45}
+.stage-3d.real-webgl .scene{border-color:#b8eaf8;box-shadow:0 12px 28px #051628a6,0 0 0 2px #66d7f73d}
+.teacher-level.selected{background:#f6d56b!important;color:#142a46!important;border-color:#fff0a2!important;box-shadow:0 0 0 3px rgba(255,215,98,.35);font-weight:900}.teacher-preview h3{font-size:clamp(24px,2.4vw,34px);color:#fff1ad;margin:8px 0 18px}</style></head><body><div id="collision-toast" role="alert" aria-live="assertive"></div><div class="wrap"><header class="top"><div><div class="brand">🚀 ASTRO <span>CODE</span> <span style="color:#a3edff">ADVENTURES</span></div><div class="sub">Προγραμμάτισε • Εξερεύνησε • Κατάκτησε τους κόσμους</div><div class="sub" style="margin-top:5px;color:#ffdc92">Δημιουργός: Τσιάλος Δημήτριος</div></div><div class="header-actions"><aside class="top-tools"><details class="tool-details" id="profile-panel"><summary>👩‍🚀 Προφίλ μαθητή</summary><div class="tool-content"><input id="name" maxlength="22" placeholder="Όνομα μαθητή"/><button class="action full" id="add" style="margin-top:8px">➕ Νέος μαθητής</button><div class="profiles" id="profiles"></div><label class="tiny" for="hero">🎭 Διάλεξε ήρωα</label><select id="hero" class="full"><option value="astronaut">👨‍🚀 Αστροναύτης</option><option value="robot">🤖 Ρομπότ</option><option value="alien">👽 Εξωγήινος</option><option value="dino">🦖 Δεινοσαυράκι</option></select><label class="tiny" for="suit">🎨 Χρώμα στολής / ήρωα</label><select id="suit" class="full"><option value="classic">🤍 Κλασική λευκή</option><option value="blue">💙 Μπλε εξερευνητής</option><option value="orange">🧡 Πορτοκαλί αποστολή</option><option value="purple">💜 Μωβ γαλαξίας</option><option value="green">💚 Πράσινη διαστημική</option></select><div class="tiny" style="margin-top:6px">Ο ήρωας και το χρώμα αποθηκεύονται στο προφίλ σου.</div><div class="stats"><div class="stat"><b id="stars">0</b>⭐ Αστέρια</div><div class="stat"><b id="completed">0</b>🏆 Πίστες</div></div><div class="reward-shop"><div class="reward-heading">🎁 Ανταμοιβές ήρωα</div><div class="tiny">Κάθε 20–30 αστέρια ξεκλειδώνεις νέο αξεσουάρ! Πάτησε ένα ξεκλειδωμένο αξεσουάρ για να το φορέσεις. Μέγιστο: 300 ⭐.</div><div id="accessories" class="accessory-grid"></div></div></details><details class="tool-details" id="map-panel"><summary>🗺️ Χάρτης αποστολών</summary><div class="tool-content"><div class="tiny" style="margin-bottom:8px">Ολοκλήρωσε μια πίστα για να ανοίξει η επόμενη.</div><div class="levels" id="levels"></div><p class="tiny">🌳 Μαγικό Δάσος 1–10<br/>🍄 Δάσος Μανιταριών 11–20<br/>🏜️ Χρυσή Έρημος 21–30<br/>🏺 Αρχαία Όαση 31–40<br/>❄️ Χιονισμένο Βουνό 41–50<br/>🏰 Παγωμένο Κάστρο 51–60<br/>🌋 Ηφαιστειακή Κοιλάδα 61–70<br/>🔥 Νησί της Λάβας 71–80<br/>🪐 Γαλαξίας 81–90<br/>🚀 Διαστημικός Σταθμός 91–100</p><button class="danger full" id="erase">Διαγραφή προφίλ</button></div></details></aside><button class="secondary" id="teacher-open" style="align-self:start">👩‍🏫 Εκπαιδευτικός · 100 πίστες</button><div class="pill" id="who">👤 Επίλεξε μαθητή</div></div></header><main class="layout"><section class="panel game"><div class="gameheader"><div><strong id="title">🌳 Πίστα 1</strong><div class="tiny" id="objective">Οδήγησε τον ήρωα στο διαμάντι!</div></div><span class="pill" id="world">🌳 Δάσος</span></div><div id="level-reward" class="level-reward" aria-live="polite"></div><div class="level-meta" id="level-meta" aria-live="polite" style="margin:0 8px 9px;color:#d6efff;font-weight:700;font-size:13px"></div><div class="view-controls"><span>💎 Βρες το λαμπερό διαμάντι · 🎮 3D LIVE WORLD · Κόσμος <span id="world-number">1</span>/10</span><button id="view-toggle" type="button" aria-pressed="true">🗺️ Κάτοψη</button></div><div class="stage-3d" id="stage-3d"><div class="scene"><canvas aria-label="Πίστα από ψηλά με καθαρά τετράγωνα και κατεύθυνση" height="710" id="canvas" width="850"></canvas></div></div><div class="legend"><span>🎭 Ήρωας</span><span>💎 Στόχος</span><span>🪨 Ροζ τετράγωνο = εμπόδιο</span><span>🟩 Ανοιχτό τετράγωνο = ελεύθερο</span><span>⭐ Συλλογή</span><span>🟡 Κίτρινο βέλος = προς τα πού κοιτάζει</span></div><div class="hint" id="tip" style="border:2px solid #7ed5f8;font-weight:700">Βάλε εντολές και πάτησε «Εκτέλεση».</div></section><aside class="panel right"><h2>🧩 Εντολές προγραμματισμού</h2><p class="tiny">Σύρε μια εντολή στον χώρο προγραμματισμού και άφησέ την στη θέση που θέλεις. Ο ήρωας ξεκινά κοιτάζοντας προς τα πάνω. Το κίτρινο βέλος δείχνει την κατεύθυνσή του.</p><div class="commands"><button class="cmd" data-cmd="F">⬆️ Μπροστά</button><button class="cmd" data-cmd="L">↶ Στροφή αριστερά</button><button class="cmd" data-cmd="R">↷ Στροφή δεξιά</button><button class="cmd" data-cmd="2">🔁 2× μπροστά</button><button class="cmd" data-cmd="3">🔁 3× μπροστά</button><button class="action cmd-run" id="run" type="button">▶ Εκτέλεση</button></div><h2 style="margin-top:17px">📝 Το πρόγραμμά μου <span class="tiny" id="count">(0 εντολές)</span></h2><div class="tiny">Σύρε τις εντολές στα κενά ανάμεσα στις γραμμές. Μπορείς επίσης να σύρεις μια υπάρχουσα εντολή για να αλλάξεις τη σειρά της.</div><div class="program" id="program" aria-label="Επεξεργαστής εντολών"></div><div class="execution" id="execution" aria-live="polite">⏸ Έτοιμο για εκτέλεση</div><div class="btnrow"><button class="secondary" id="reset">↺ Επαναφορά</button><button class="secondary" id="undo">↶ Αναίρεση</button><button class="secondary" id="clear">🗑 Καθαρισμός</button></div><div class="message" id="message" role="status">Έτοιμοι για περιπέτεια!</div><div class="btnrow" style="margin-top:12px"><button class="secondary full" id="next">Επόμενη πίστα ➜</button></div><p class="tiny" style="margin-top:18px">💡 <b>Στόχος:</b> Φτάσε στο διαμάντι, αποφεύγοντας τα εμπόδια. Κέρδισε έως 3 αστέρια ανά πίστα και ξεκλείδωσε αξεσουάρ. Οι επαναλήψεις εκτελούν πολλά βήματα με μία εντολή.</p></aside></main><div class="footer">Astro Code Adventures • Δημιουργός: Τσιάλος Δημήτριος • Δωρεάν, χωρίς λογαριασμό ή σύνδεση • Η πρόοδος αποθηκεύεται στη συσκευή σου</div></div><div class="teacher-lock" id="teacher-lock" role="dialog" aria-modal="true" aria-label="Είσοδος εκπαιδευτικού"><div class="pin-box"><h2 id="pin-heading">🔐 Πρόσβαση εκπαιδευτικού</h2><p id="pin-help">Πληκτρολόγησε το PIN σου.</p><input id="teacher-pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="off" placeholder="PIN 4–8 ψηφίων" aria-label="PIN εκπαιδευτικού"/><div id="pin-confirm-wrap" style="display:none;margin-top:10px"><input id="teacher-pin-confirm" type="password" inputmode="numeric" maxlength="8" placeholder="Επιβεβαίωση PIN" aria-label="Επιβεβαίωση PIN"/></div><div class="pin-error" id="pin-error" role="alert"></div><div class="pin-actions"><button class="action" id="pin-submit">Συνέχεια</button><button class="secondary" id="pin-cancel">Ακύρωση</button></div><p style="font-size:12px">Το PIN προστατεύει την πρόσβαση μέσα στο παιχνίδι σε αυτή τη συσκευή. Δεν αποτελεί προστασία από τεχνικά έμπειρο χρήστη.</p></div></div><div class="teacher-modal" id="teacher-modal" role="dialog" aria-modal="true" aria-label="Πίνακας εκπαιδευτικού"><div class="teacher-box"><div class="teacher-controls"><h2 style="margin:0;flex:1">👩‍🏫 Πίνακας εκπαιδευτικού · 100 πίστες</h2><button id="teacher-close">✕ Κλείσιμο</button></div><p class="tiny">Επίλεξε οποιαδήποτε πίστα και δες το πραγματικό της περιβάλλον, τον ήρωα, τα εμπόδια και τα αστέρια. Η προεπισκόπηση δεν αλλάζει την πρόοδο των μαθητών.</p><div class="teacher-grid" id="teacher-levels"></div><div class="teacher-preview"><canvas id="teacher-canvas" width="850" height="710"></canvas><div><h3 id="teacher-title">Πίστα 1</h3><div class="teacher-controls" style="margin-bottom:12px"><button type="button" id="teacher-prev">← Προηγούμενη</button><button type="button" id="teacher-next">Επόμενη →</button></div><p id="teacher-info"></p><label><input type="checkbox" id="teacher-path" checked style="width:auto"/> Εμφάνιση ενδεικτικής διαδρομής</label><p class="tiny">Η προεπισκόπηση χρησιμοποιεί ακριβώς τα ίδια γραφικά με το παιχνίδι. Η κίτρινη γραμμή δείχνει μια δυνατή λύση.</p></div></div></div></div><div class="modal" id="modal"><div class="modalbox"><div style="font-size:70px">🏆👨‍🚀✨</div><h1>Μπράβο, εξερευνητή!</h1><div id='reward-earned' class='reward-earned'></div><p id="wintext"></p><button class="action" id="advance">Επόμενη αποστολή ➜</button><button class="secondary" id="close" style="margin-left:8px">Κλείσιμο</button></div></div><script>
+'use strict';const $=id=>document.getElementById(id),canvas=$('canvas');let ctx=canvas.getContext('2d');let profiles=readProfiles(),current=readCurrent(),level=1,program=[],insertAt=0,activeCommand=-1,activeRepeat=0,busy=false,position={x:0,y:0,d:0},collected=[],completedRun=false,collisionEffect=null;let lastInsertedIndex=-1;let N=6;const dirs=[[0,-1],[1,0],[0,1],[-1,0]],labels={F:'⬆️ Μπροστά',L:'↶ Αριστερά',R:'↷ Δεξιά','2':'🔁 2×','3':'🔁 3×'},worlds=[['🌳','Δάσος','#78bb75','#64a56a'],['🏜️','Έρημος','#e8c17c','#c99b5c'],['❄️','Χιόνια','#c7eaf3','#a4d1e5'],['🌋','Ηφαίστειο','#bc897d','#99615a'],['🚀','Διάστημα','#9b99d5','#6d6bb2']];const tenWorlds=[
+ ['🌳','Μαγικό Δάσος'],['🍄','Δάσος των Μανιταριών'],
+ ['🏜️','Χρυσή Έρημος'],['🏺','Αρχαία Όαση'],
+ ['❄️','Χιονισμένο Βουνό'],['🏰','Παγωμένο Κάστρο'],
+ ['🌋','Ηφαιστειακή Κοιλάδα'],['🔥','Νησί της Λάβας'],
+ ['🪐','Γαλαξίας'],['🚀','Διαστημικός Σταθμός']
+];
+const worldIndex=n=>Math.floor((n-1)/10);
+const worldTheme=n=>Math.floor((n-1)/20);
+const worldName=n=>tenWorlds[worldIndex(n)];
+function readProfiles(){try{const p=JSON.parse(localStorage.getItem('foxcode_adventures_profiles')||'{}');return p&&typeof p==='object'&&!Array.isArray(p)?p:{}}catch(e){return {}}}function readCurrent(){try{return localStorage.getItem('foxcode_adventures_current')||''}catch(e){return ''}}function save(){try{localStorage.setItem('foxcode_adventures_profiles',JSON.stringify(profiles));localStorage.setItem('foxcode_adventures_current',current)}catch(e){setMessage('Η αποθήκευση δεν είναι διαθέσιμη σε αυτόν τον browser.','bad')}}function hash(n){let x=n*2654435761>>>0;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return(x>>>0)/4294967296}}function makeLevel(n){
+ // Οι πρώτες δέκα πίστες είναι μικρά, χειροποίητα μαθήματα: πρώτα κίνηση, μετά στροφές.
+ if(n<=10){
+  const plans=[
+   'UUU','UUUU','UURR','UUURRR','UURRU','UUURRU','UURRUUR',
+   'UUURRRUU','UURRRUURR','UUURRUURRR'
+  ];
+  const steps=plans[n-1],size=6,start={x:0,y:5},path=[{...start}];
+  let x=start.x,y=start.y;
+  for(const step of steps){if(step==='U')y--;else if(step==='R')x++;path.push({x,y})}
+  const goal={x,y},key=(a,b)=>a+','+b,route=new Set(path.map(p=>key(p.x,p.y)));
+  const rng=hash(n*123+7),rocks=[];
+  // Τα πρώτα 2 επίπεδα δεν έχουν εμπόδια. Έπειτα προστίθενται σταδιακά.
+  const obstacleCount=[0,0,1,1,2,2,3,3,4,5][n-1];
+  const options=[];
+  for(let yy=0;yy<size;yy++)for(let xx=0;xx<size;xx++){
+   if(!route.has(key(xx,yy)))options.push({x:xx,y:yy,r:rng()});
+  }
+  options.sort((a,b)=>a.r-b.r);
+  for(const v of options.slice(0,obstacleCount))rocks.push({x:v.x,y:v.y});
+  const starCount=n<=3?1:n<=6?2:3;
+  const stars=[];
+  for(let j=1;j<=starCount;j++){
+   const idx=Math.max(1,Math.min(path.length-2,Math.round(j*(path.length-1)/(starCount+1))));
+   if(!stars.some(p=>p.x===path[idx].x&&p.y===path[idx].y))stars.push({...path[idx]});
+  }
+  return{size,start,goal,rocks,stars,path};
+ }
+ const chapter=Math.floor((n-1)/20),size=[6,7,7,8,8][chapter];
+ const rng=hash(n*123+7),start={x:0,y:size-1},goal={x:size-1,y:0};
+ const key=(x,y)=>x+','+y,inside=(x,y)=>x>=0&&x<size&&y>=0&&y<size;
+ const near=(x,y)=>[[x+1,y],[x-1,y],[x,y+1],[x,y-1]].filter(([a,b])=>inside(a,b));
+ const desiredStars=[2,3,3,4,4][chapter],density=[.07,.12,.17,.22,.27][chapter]+((n-1)%20)*.0015;
+ const targetCommands=n<=20?15:n<=40?20:n<=60?25:n<=80?31:38;
+ const maxCommands=n<=20?21:n<=40?27:n<=60?34:n<=80?42:52;
+ let best=null,bestScore=-Infinity;
+ for(let attempt=0;attempt<400;attempt++){
+  const blocked=new Set();
+  for(let y=0;y<size;y++)for(let x=0;x<size;x++)if(!(x===0&&y===size-1)&&!(x===size-1&&y===0)&&rng()<density)blocked.add(key(x,y));
+  let queue=[{x:0,y:size-1,path:[start]}],seen=new Set([key(start.x,start.y)]),path=null;
+  for(let i=0;i<queue.length;i++){
+   const v=queue[i];if(v.x===goal.x&&v.y===goal.y){path=v.path;break}
+   const options=near(v.x,v.y).map(([x,y])=>({x,y,r:rng()})).sort((a,b)=>a.r-b.r);
+   for(const t of options){const k=key(t.x,t.y);if(!blocked.has(k)&&!seen.has(k)){seen.add(k);queue.push({x:t.x,y:t.y,path:[...v.path,{x:t.x,y:t.y}]})}}
+  }
+  if(!path||path.length<desiredStars+3)continue;
+  let commands=0,lastDir=0;for(let k=1;k<path.length;k++){const dx=path[k].x-path[k-1].x,dy=path[k].y-path[k-1].y;const nextDir=dx===1?1:dx===-1?3:dy===1?2:0;const delta=(nextDir-lastDir+4)%4;commands+=1+(delta===0?0:delta===2?2:1);lastDir=nextDir}if(commands>maxCommands)continue;
+  let turns=0,adjacent=0;
+  for(let i=1;i<path.length;i++){
+   if(i>1&&((path[i].x-path[i-1].x)!==(path[i-1].x-path[i-2].x)||(path[i].y-path[i-1].y)!==(path[i-1].y-path[i-2].y)))turns++;
+   if(near(path[i].x,path[i].y).some(([x,y])=>blocked.has(key(x,y))))adjacent++;
+  }
+  const target=[10,13,16,20,24][chapter];
+  const score=-Math.abs(commands-targetCommands)*5-Math.abs(path.length-1-target)*1.5+turns*.35+adjacent*.2+rng();
+  if(score>bestScore){best={path,blocked};bestScore=score}
+ }
+ if(!best)throw Error('Αδύνατη δημιουργία πίστας '+n);
+ const path=best.path,rocks=[...best.blocked].map(k=>{const [x,y]=k.split(',').map(Number);return{x,y}});
+ const candidates=path.slice(2,-1).map((p,i)=>({p,i,score:(near(p.x,p.y).some(([x,y])=>best.blocked.has(key(x,y)))?8:0)+(i>0&&i<path.length-3&&((path[i+2].x-path[i+1].x!==path[i+1].x-path[i].x)||(path[i+2].y-path[i+1].y!==path[i+1].y-path[i].y))?4:0)+rng()})).sort((a,b)=>b.score-a.score);
+ let selected=[];
+ for(const c of candidates){if(selected.length>=desiredStars)break;if(selected.every(s=>Math.abs(s.i-c.i)>=2))selected.push(c)}
+ for(const c of candidates){if(selected.length>=desiredStars)break;if(!selected.some(s=>s.i===c.i))selected.push(c)}
+ const stars=selected.sort((a,b)=>a.i-b.i).map(c=>c.p);
+ return{size,start,goal,rocks,stars,path};
+}let data=makeLevel(1);function player(){let p=profiles[current];if(!p||typeof p!=='object')return null;p.unlocked=Math.max(1,Math.min(100,Number(p.unlocked)||1));p.stars=Number(p.stars)||0;p.done=p.done&&typeof p.done==='object'?p.done:{};p.bonus=p.bonus&&typeof p.bonus==='object'?p.bonus:{};p.accessory=accessories.some(a=>a.id===p.accessory)?p.accessory:'none';p.suit=['classic','blue','orange','purple','green'].includes(p.suit)?p.suit:'classic';p.hero=['astronaut','robot','alien','dino'].includes(p.hero)?p.hero:'astronaut';return p}const accessories=[
+ {id:'none',icon:'✨',name:'Χωρίς αξεσουάρ',need:0},
+ {id:'cap',icon:'🧢',name:'Καπέλο εξερευνητή',need:20},
+ {id:'glasses',icon:'🕶️',name:'Γυαλιά πιλότου',need:40},
+ {id:'crown',icon:'👑',name:'Χρυσό στέμμα',need:70},
+ {id:'headphones',icon:'🎧',name:'Διαστημικά ακουστικά',need:100},
+ {id:'scarf',icon:'🧣',name:'Μαγικό κασκόλ',need:130},
+ {id:'wings',icon:'🪽',name:'Φτερά περιπέτειας',need:160},
+ {id:'medal',icon:'🏅',name:'Μετάλλιο γενναιότητας',need:200},
+ {id:'wizard',icon:'🪄',name:'Μαγικό ραβδί',need:230},
+ {id:'shield',icon:'🛡️',name:'Ασπίδα ήρωα',need:250},
+ {id:'diamond',icon:'💎',name:'Διαμαντένιο έμβλημα',need:270},
+ {id:'trophy',icon:'🏆',name:'Κύπελλο πρωταθλητή',need:290}
+];
+let runHits=0;
+function earnedTotal(p){return Object.values(p?.done||{}).reduce((a,v)=>a+(typeof v==='number'?v:(v?3:0)),0)}
+function renderAccessories(p){
+ const box=$('accessories');if(!box)return;box.innerHTML='';
+ for(const a of accessories){const unlocked=p&&p.stars>=a.need;
+  const b=document.createElement('button');b.type='button';b.className='accessory'+(p?.accessory===a.id?' active':'');
+  b.textContent=a.icon+' '+a.name+(unlocked?' ✓':' 🔒 '+a.need+'⭐');b.title=unlocked?'Φόρεσε: '+a.name:'Χρειάζεσαι '+a.need+' αστέρια';
+  b.disabled=!unlocked||busy;b.onclick=()=>{const pp=player();if(!pp)return;pp.accessory=a.id;save();refresh();draw()};
+  box.append(b);
+ }
+}
+function drawAccessory(px,py){
+ const p=player(),a=p?.accessory||'none';if(a==='none')return;
+ ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='#172a49';ctx.shadowBlur=3;
+ const size=Math.min(35,S*.39);ctx.font=Math.round(size)+'px system-ui';
+ const icon=accessories.find(x=>x.id===a)?.icon;const low=['wings','medal','shield','diamond','trophy'].includes(a);if(icon)ctx.fillText(icon,px+(a==='shield'?S*.24:0),py+(low?S*.13:-S*.24));
+ ctx.restore();
+}
+function setMessage(t,type=''){const e=$('message');e.textContent=t;e.className='message '+type}function select(name){if(busy||!profiles[name]||typeof profiles[name]!=='object')return;current=name;level=Math.min(100,Math.max(1,profiles[name].unlocked||1));save();refresh();loadLevel(level)}function refresh(){const p=player();$('who').textContent=p?({astronaut:'👨‍🚀',robot:'🤖',alien:'👽',dino:'🦖'}[p.hero]||'👨‍🚀')+' '+current:'👤 Επίλεξε μαθητή';$('profiles').innerHTML='';Object.keys(profiles).forEach(name=>{let b=document.createElement('button');b.className='profile '+(name===current?'sel':'');b.textContent='👤 '+name;b.onclick=()=>select(name);$('profiles').append(b)});$('hero').value=p?p.hero:'astronaut';$('hero').disabled=!p||busy;$('suit').value=p?p.suit:'classic';$('suit').disabled=!p||busy;$('stars').textContent=p?p.stars||0:0;$('completed').textContent=p?Object.keys(p.done||{}).length:0;renderAccessories(p);$('levels').innerHTML='';for(let n=1;n<=100;n++){let b=document.createElement('button');b.className='level'+(n===level?' active':'')+(p&&p.done&&Object.prototype.hasOwnProperty.call(p.done,n)?' done':'')+(!p||n>p.unlocked?' locked':'');b.textContent=n;b.title='Πίστα '+n;b.disabled=!p||n>p.unlocked;b.onclick=()=>loadLevel(n);$('levels').append(b)}}function loadLevel(n){if(busy||!player()||n>player().unlocked)return;level=n;data=makeLevel(n);N=data.size;program=[];insertAt=0;lastInsertedIndex=-1;activeCommand=-1;activeRepeat=0;position={...data.start,d:0};collected=[];busy=false;completedRun=false;collisionEffect=null;runHits=0;const w=worldName(n);$('title').textContent=w[0]+' Πίστα '+n;$('world').textContent=w[0]+' '+w[1]+' · '+N+'×'+N;$('objective').textContent='Πλέγμα '+N+'×'+N+' · Μάζεψε ΟΛΑ τα αστέρια ⭐ και μετά φτάσε στο διαμάντι 💎';$('level-reward').textContent='🏆 Βραβείο πίστας: έως 3 ⭐  •  💥 Σύγκρουση: −1 ⭐ από το βραβείο (ελάχιστο 0)';$('level-meta').textContent='🎯 '+(n<=10?'Εκμάθηση βήμα-βήμα':n<=20?'Αρχάριος':n<=40?'Μαθαίνω στροφές':n<=60?'Προχωρημένος':n<=80?'Έμπειρος':'Ειδικός')+'  •  🧱 '+data.rocks.length+' εμπόδια  •  ⭐ '+data.stars.length+' αστέρια';$('tip').textContent=n<=2?'Ξεκίνα με την εντολή Μπροστά. Κάθε βήμα είναι ένα τετράγωνο!':n<=4?'Τώρα δοκίμασε και τη στροφή Δεξιά.':n<=10?'Σχεδίασε τη διαδρομή σου και μάζεψε τα αστέρια!':'Μάζεψε όλα τα αστέρια αποφεύγοντας τα εμπόδια. Κάθε εντολή μπροστά = 1 τετράγωνο!';renderProgram();executionStatus('⏸ Έτοιμο για εκτέλεση');setMessage('Η αποστολή ξεκινά!');save();refresh();draw()}function renderProgram(){
+ $('count').textContent='('+program.length+' εντολές)';const host=$('program');host.replaceChildren();
+ const addSlot=(i)=>{const slot=document.createElement('button');slot.className='insert-slot'+(insertAt===i?' selected':'');slot.textContent='⋮';slot.title='Άφησε εδώ την εντολή';slot.disabled=busy;slot.dataset.slot=i;slot.setAttribute('aria-label','Θέση '+(i+1)+' για σύρσιμο εντολής');host.append(slot)};
+ for(let i=0;i<=program.length;i++){
+  addSlot(i);if(i===program.length)break;
+  const cmd=program[i],line=document.createElement('div');line.className='chip'+(activeCommand===i?' executing':'')+(insertAt===i+1?' selected':'');line.dataset.index=i;
+  const text=document.createElement('span');text.className='chiptext';text.textContent=(i+1)+'. '+labels[cmd]+(activeCommand===i&&activeRepeat>0?' · βήμα '+activeRepeat:'');line.append(text);
+  line.draggable=false;line.title='Σύρε για αλλαγή σειράς';
+  const del=document.createElement('button');del.textContent='×';del.title='Διαγραφή εντολής '+(i+1);del.disabled=busy;del.onclick=e=>{e.stopPropagation();if(!busy){program.splice(i,1);insertAt=Math.min(insertAt,program.length);renderProgram()}};line.append(del);host.append(line);
+ }
+}
+function executionStatus(text){$('execution').textContent=text}
+function highlightCommand(index,repeat=0){activeCommand=index;activeRepeat=repeat;renderProgram();const line=$('program').querySelector('.executing');if(line)line.scrollIntoView({block:'nearest',behavior:'smooth'});if(index>=0)executionStatus('▶ Εκτελείται η εντολή '+(index+1)+' από '+program.length+': '+labels[program[index]]+(repeat?' · βήμα '+repeat:''));}
+function polygon(pts,fill,stroke){ctx.beginPath();ctx.moveTo(...pts[0]);pts.slice(1).forEach(p=>ctx.lineTo(...p));ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke()}}function iso(x,y,z=0){return [161+x*88,95+y*88-z]}function diamond(x,y,z,size,fill){let [a,b]=iso(x,y,z);polygon([[a,b-size],[a+size*1.4,b],[a,b+size*.65],[a-size*1.4,b]],fill,'#ffffff55')}function roundedRect(x,y,w,h,r,c){ctx.fillStyle=c;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}function tree(x,y,kind){let [a,b]=iso(x+.5,y+.5,0);ctx.save();ctx.fillStyle='#5c3925';ctx.fillRect(a-5,b-5,10,22);let color=kind===2?'#d9f7ff':kind===3?'#6b485d':kind===4?'#66d8d5':'#267c55';for(let i=0;i<3;i++){polygon([[a,b-37+i*11],[a+23-i*3,b+9+i*4],[a-23+i*3,b+9+i*4]],color,'#d7fff8')}ctx.restore()}function astronaut(x,y,d){
+if(player()?.hero && player().hero!=='astronaut'){drawAlternativeHero(x,y,d);return;}let [a,b]=iso(x+.5,y+.5,31);const t=performance.now()/1000,bob=Math.sin(t*3.8)*3,walk=busy?Math.sin(t*17)*5:Math.sin(t*3)*1.5;ctx.save();ctx.translate(a,b+bob);ctx.scale(.72,.72);ctx.shadowColor='#17264b99';ctx.shadowBlur=16;ctx.fillStyle='#17264b55';ctx.beginPath();ctx.ellipse(0,27,26,9,0,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+// Boots and animated legs
+const suit=player()?.suit||'classic',palette={classic:['#dfe9ff','#f8fbff','#dce8fc'],blue:['#478bdb','#8ac4ff','#5ca6e9'],orange:['#f4a45b','#ffd29a','#f6ae72'],purple:['#a58ce6','#d4c4ff','#a58ce6'],green:['#62bba2','#b4eedc','#75cbb5']}[suit];ctx.fillStyle='#354b82';roundedRect(-19,13+walk,15,22,6,'#354b82');roundedRect(4,13-walk,15,22,6,'#354b82');roundedRect(-22,29+walk,20,9,4,'#20365d');roundedRect(3,29-walk,20,9,4,'#20365d');
+// Backpack, suit, animated arms
+roundedRect(-29,-24,58,51,18,palette[0]);roundedRect(-24,-20,48,43,14,palette[1]);roundedRect(-33,-12+walk,13,32,7,palette[2]);roundedRect(20,-12-walk,13,32,7,palette[2]);roundedRect(-34,12+walk,15,12,5,'#586dd0');roundedRect(19,12-walk,15,12,5,'#586dd0');roundedRect(-13,-7,26,19,7,'#6b8af2');roundedRect(-8,-3,16,11,4,'#bcefff');
+// Helmet and reflective visor
+ctx.fillStyle='#eaf4ff';ctx.beginPath();ctx.arc(0,-36,31,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#a9c9e8';ctx.lineWidth=4;ctx.stroke();let visor=ctx.createLinearGradient(-23,-55,24,-16);visor.addColorStop(0,'#a7f9ff');visor.addColorStop(.5,'#4277d4');visor.addColorStop(1,'#152c73');ctx.fillStyle=visor;ctx.beginPath();ctx.ellipse(0,-37,24,20,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#ffffffa8';ctx.beginPath();ctx.ellipse(-10,-46,7,4,-.4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#d6edff';ctx.beginPath();ctx.arc(24,-32,5,0,Math.PI*2);ctx.fill();ctx.font='bold 21px system-ui';ctx.textAlign='center';ctx.fillStyle='#fff';ctx.shadowColor='#213a77';ctx.shadowBlur=5;ctx.fillText(['↑','→','↓','←'][d],0,-76);ctx.restore()}
+function drawAlternativeHero(x,y,d){
+const [a,b]=iso(x+.5,y+.5,31),hero=player()?.hero||'robot',suit=player()?.suit||'classic';
+const colors={classic:'#dceaff',blue:'#57a8f9',orange:'#ffad57',purple:'#b9a1ff',green:'#73d9a3'};
+const color=colors[suit],t=performance.now()/1000,bob=Math.sin(t*3.8)*3,step=busy?Math.sin(t*15)*5:0;
+ctx.save();ctx.translate(a,b+bob);ctx.scale(.72,.72);
+ctx.fillStyle='#132e5077';ctx.beginPath();ctx.ellipse(0,29,25,8,0,0,Math.PI*2);ctx.fill();
+roundedRect(-19,12+step,15,25,5,'#30466d');roundedRect(4,12-step,15,25,5,'#30466d');
+roundedRect(-24,-24,48,48,13,color);roundedRect(-33,-14+step,13,31,6,color);roundedRect(20,-14-step,13,31,6,color);
+if(hero==='robot'){
+ roundedRect(-28,-62,56,43,11,'#c7e8ff');roundedRect(-23,-57,46,31,9,'#1d4168');
+ roundedRect(-16,-48,12,12,4,'#65f9ff');roundedRect(5,-48,12,12,4,'#65f9ff');
+ ctx.strokeStyle='#173f5f';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(0,-62);ctx.lineTo(0,-73);ctx.stroke();ctx.fillStyle='#ffe06c';ctx.beginPath();ctx.arc(0,-76,6,0,7);ctx.fill();
+}else if(hero==='alien'){
+ ctx.fillStyle='#8ce9a7';ctx.beginPath();ctx.ellipse(0,-43,30,30,0,0,7);ctx.fill();
+ ctx.fillStyle='#173653';ctx.beginPath();ctx.ellipse(-12,-45,9,14,-.25,0,7);ctx.ellipse(12,-45,9,14,.25,0,7);ctx.fill();
+ ctx.strokeStyle='#2b7057';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,-31,8,.2,Math.PI-.2);ctx.stroke();
+}else{
+ ctx.fillStyle='#69cb8b';ctx.beginPath();ctx.ellipse(0,-41,29,27,0,0,7);ctx.fill();
+ ctx.beginPath();ctx.ellipse(18,-33,22,15,0,0,7);ctx.fill();
+ ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(-9,-45,8,0,7);ctx.arc(9,-45,8,0,7);ctx.fill();
+ ctx.fillStyle='#163b4a';ctx.beginPath();ctx.arc(-8,-45,4,0,7);ctx.arc(10,-45,4,0,7);ctx.fill();
+ for(let i=0;i<3;i++){ctx.fillStyle='#ffdc77';ctx.beginPath();ctx.moveTo(-20+i*15,-64);ctx.lineTo(-14+i*15,-78);ctx.lineTo(-7+i*15,-64);ctx.fill();}
+}
+ctx.font='bold 24px system-ui';ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText(['↑','→','↓','←'][d],0,-89);ctx.restore();
+}
+function paintHero(cx,cy,dir){
+ const hero=player()?.hero||'astronaut',suit=player()?.suit||'classic';
+ const palette={classic:'#f7f8ff',blue:'#4eafff',orange:'#ffab4e',purple:'#bb91ff',green:'#76e6aa'};
+ const c=palette[suit]||palette.classic,t=performance.now()/1000,bob=Math.sin(t*3)*1.5;
+ ctx.save();ctx.translate(cx,cy+bob);ctx.scale(Math.min(1.13, (528/N)/76),Math.min(1.13, (528/N)/76));ctx.shadowColor='#0a2d3e66';ctx.shadowBlur=7;
+ ctx.fillStyle='#0a2945aa';ctx.beginPath();ctx.ellipse(0,20,22,7,0,0,7);ctx.fill();ctx.shadowBlur=0;
+ ctx.fillStyle=c;ctx.strokeStyle='#183951';ctx.lineWidth=2.5;
+ if(hero==='astronaut'){
+  roundedRect(-16,-1,32,27,9,c);roundedRect(-21,6,9,19,4,c);roundedRect(12,6,9,19,4,c);
+  roundedRect(-13,19,11,8,3,'#263d68');roundedRect(2,19,11,8,3,'#263d68');
+  ctx.fillStyle='#f8fdff';ctx.beginPath();ctx.arc(0,-12,22,0,7);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#165b99';ctx.beginPath();ctx.ellipse(0,-12,17,15,0,0,7);ctx.fill();
+  ctx.fillStyle='#a9f4ff';ctx.beginPath();ctx.ellipse(-6,-18,7,4,-.5,0,7);ctx.fill();
+  roundedRect(-5,6,10,8,3,'#5ccff2');
+ }else if(hero==='robot'){
+  roundedRect(-16,-1,32,27,8,c);roundedRect(-18,-29,36,29,8,'#d6ecff');roundedRect(-15,-25,30,20,6,'#244d7c');
+  roundedRect(-11,-19,8,8,3,'#72f9ff');roundedRect(4,-19,8,8,3,'#72f9ff');
+  roundedRect(-14,23,10,7,3,'#273f60');roundedRect(4,23,10,7,3,'#273f60');
+  ctx.strokeStyle='#1c4164';ctx.beginPath();ctx.moveTo(0,-29);ctx.lineTo(0,-36);ctx.stroke();ctx.fillStyle='#ffd46e';ctx.beginPath();ctx.arc(0,-38,4,0,7);ctx.fill();
+ }else if(hero==='alien'){
+  roundedRect(-15,0,30,27,9,c);ctx.fillStyle='#81e7a4';ctx.beginPath();ctx.ellipse(0,-14,22,23,0,0,7);ctx.fill();
+  ctx.fillStyle='#143c4d';ctx.beginPath();ctx.ellipse(-9,-15,7,10,-.2,0,7);ctx.ellipse(9,-15,7,10,.2,0,7);ctx.fill();
+  roundedRect(-12,23,9,6,3,'#3b735a');roundedRect(3,23,9,6,3,'#3b735a');
+ }else{
+  ctx.fillStyle='#70ce85';ctx.beginPath();ctx.ellipse(0,0,21,24,0,0,7);ctx.fill();ctx.beginPath();ctx.ellipse(13,-12,18,16,0,0,7);ctx.fill();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(7,-16,6,0,7);ctx.arc(20,-16,6,0,7);ctx.fill();ctx.fillStyle='#1b3648';ctx.beginPath();ctx.arc(8,-16,3,0,7);ctx.arc(21,-16,3,0,7);ctx.fill();
+  ctx.fillStyle='#ffd47d';for(let k=0;k<3;k++){ctx.beginPath();ctx.moveTo(-19+k*12,-19);ctx.lineTo(-14+k*12,-31);ctx.lineTo(-7+k*12,-18);ctx.fill()}
+ }
+ ctx.restore();
+ // Unambiguous facing direction above the character, always inside its cell.
+ ctx.save();ctx.translate(cx,cy);ctx.scale(Math.min(1,(528/N)/86),Math.min(1,(528/N)/86));ctx.rotate(dir*Math.PI/2);ctx.fillStyle='#ffe12f';ctx.strokeStyle='#17334c';ctx.lineWidth=3.5;
+ ctx.beginPath();ctx.moveTo(0,-39);ctx.lineTo(11,-26);ctx.lineTo(4,-27);ctx.lineTo(4,-20);ctx.lineTo(-4,-20);ctx.lineTo(-4,-27);ctx.lineTo(-11,-26);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
+}
+// Decorative cartoon objects are drawn outside the grid or INSIDE blocked tiles only.
+function cartoonProp(x,y,kind,scale=1,t=0){
+ ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.lineJoin='round';ctx.lineCap='round';ctx.shadowColor='#132f4366';ctx.shadowBlur=7;ctx.shadowOffsetY=4;
+ const oval=(x,y,rx,ry,c)=>{ctx.fillStyle=c;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill()};
+ oval(0,5,24,7,'#142c4260');
+ if(kind===0){ // layered fir tree
+  ctx.fillStyle='#805035';ctx.fillRect(-5,-5,10,23);
+  for(let i=0;i<3;i++){let yy=-47+i*15;ctx.fillStyle=['#1f805d','#26996c','#3db67b'][i];ctx.strokeStyle='#16543d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,yy-15);ctx.lineTo(-24+i*3,yy+20);ctx.lineTo(24-i*3,yy+20);ctx.closePath();ctx.fill();ctx.stroke()}
+  oval(-6,-43,4,7,'#b8ffda88');
+ }else if(kind===1){ // cactus
+  ctx.strokeStyle='#327d51';ctx.lineWidth=13;ctx.beginPath();ctx.moveTo(0,11);ctx.lineTo(0,-38);ctx.moveTo(0,-12);ctx.lineTo(-15,-12);ctx.lineTo(-15,-26);ctx.moveTo(0,-22);ctx.lineTo(14,-22);ctx.lineTo(14,-35);ctx.stroke();ctx.strokeStyle='#83df92';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(-3,9);ctx.lineTo(-3,-38);ctx.stroke();oval(0,-41,7,5,'#f7b0d0');
+ }else if(kind===2){ // snow pine
+  ctx.fillStyle='#6d564f';ctx.fillRect(-5,-5,10,21);for(let i=0;i<3;i++){let yy=-48+i*17;ctx.fillStyle='#2c8294';ctx.beginPath();ctx.moveTo(0,yy-14);ctx.lineTo(-23+i*4,yy+20);ctx.lineTo(23-i*4,yy+20);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(0,yy-14);ctx.lineTo(-9,yy+2);ctx.lineTo(9,yy+2);ctx.fill()}
+ }else if(kind===3){ // volcano crystal
+  ctx.fillStyle='#443646';ctx.strokeStyle='#231f36';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-23,10);ctx.lineTo(-12,-28);ctx.lineTo(4,-42);ctx.lineTo(25,10);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#ff7b4d';ctx.beginPath();ctx.moveTo(-10,-26);ctx.lineTo(4,-42);ctx.lineTo(14,-18);ctx.lineTo(4,-13);ctx.fill();oval(5,-42+Math.sin(t*2)*3,5,5,'#ffd36e');
+ }else{ // sci-fi crystal
+  ctx.fillStyle='#4b4e8f';ctx.fillRect(-16,-2,32,14);ctx.fillStyle='#82f7ff';ctx.strokeStyle='#284ca1';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,-47);ctx.lineTo(18,-28);ctx.lineTo(11,-3);ctx.lineTo(-11,-3);ctx.lineTo(-18,-28);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#fff9';ctx.beginPath();ctx.moveTo(0,-43);ctx.lineTo(-10,-27);ctx.lineTo(-3,-24);ctx.fill();oval(0,-25,22+Math.sin(t*2)*2,30,'#6eefff18')}
+ ctx.restore();
+}
+function worldScenery(wi,w,h,t){
+ // Decorative objects stay in the margins: grid occupies x=161..689, y=95..623.
+ ctx.save();
+ for(let i=0;i<4;i++){
+  const yy=185+i*125,scale=.62+(i%2)*.06;
+  cartoonProp(62,yy,wi,scale,t);
+  cartoonProp(786,yy+16,wi,scale,t);
+ }
+ for(let i=0;i<4;i++)cartoonProp(130+i*190,699,wi,.34,t);
+ for(let i=0;i<4;i++)cartoonProp(85+i*220,75,wi,.32,t);
+ if(wi===0||wi===2||wi===4){
+  for(let i=0;i<18;i++){
+   const x=(i*173+19)%w,y=(i*83+27)%h;
+   if(x>151&&x<699&&y>85&&y<633)continue;
+   ctx.fillStyle=wi===4?'#b3f7ff':wi===2?'#ffffff':'#d3ffd2';
+   ctx.beginPath();ctx.arc(x,y+Math.sin(t*1.8+i)*3,2.4,0,Math.PI*2);ctx.fill();
+  }
+ }
+ ctx.restore();
+}
+function draw(){
+ const w=ctx.canvas.width,h=ctx.canvas.height,theme=worlds[Math.floor((level-1)/20)],wi=Math.floor((level-1)/20);
+ ctx.clearRect(0,0,w,h);let sky=ctx.createLinearGradient(0,0,0,h);sky.addColorStop(0,['#77caff','#ffd3a2','#bde9ff','#a36a6c','#101c54'][wi]);sky.addColorStop(1,['#d6f9d6','#f9e0a6','#f1fbff','#503a4b','#443b87'][wi]);ctx.fillStyle=sky;ctx.fillRect(0,0,w,h);
+ // The world is recognizable even before entering the grid.
+ ctx.save();ctx.globalAlpha=.85;
+ if(wi===0){
+  ctx.fillStyle='#8ed7b1';ctx.beginPath();ctx.moveTo(0,135);ctx.quadraticCurveTo(205,80,440,135);ctx.quadraticCurveTo(660,85,850,137);ctx.lineTo(850,710);ctx.lineTo(0,710);ctx.fill();
+  ctx.fillStyle='#4eac80';ctx.beginPath();ctx.moveTo(0,615);ctx.quadraticCurveTo(200,575,430,625);ctx.quadraticCurveTo(640,590,850,620);ctx.lineTo(850,710);ctx.lineTo(0,710);ctx.fill();
+  for(let i=0;i<5;i++){let x=32+i*196,y=91+(i%2)*8,r=19+(i%3)*5;ctx.fillStyle='#6d5940';ctx.fillRect(x-4,y-10,8,28);ctx.fillStyle=i%2?'#3a9365':'#257f60';ctx.beginPath();ctx.arc(x,y-16,r,0,7);ctx.arc(x-r*.6,y-11,r*.72,0,7);ctx.arc(x+r*.6,y-11,r*.72,0,7);ctx.fill();ctx.fillStyle='#a5e5ac';ctx.beginPath();ctx.arc(x-8,y-24,5,0,7);ctx.fill()}
+ }
+ else if(wi===1){ctx.fillStyle='#d49b58';for(let i=0;i<5;i++){ctx.beginPath();ctx.ellipse(i*220,640,160,75,0,0,7);ctx.fill()}ctx.fillStyle='#b87944';for(let i=0;i<7;i++){ctx.fillRect(35+i*126,55+(i%2)*20,8,35);ctx.beginPath();ctx.arc(39+i*126,52+(i%2)*20,16,0,7);ctx.fill()}}
+ else if(wi===2){ctx.fillStyle='#fff';for(let i=0;i<9;i++){let x=i*110;ctx.beginPath();ctx.moveTo(x-65,130);ctx.lineTo(x,25+(i%3)*20);ctx.lineTo(x+65,130);ctx.fill()}ctx.fillStyle='#eaf9ff';ctx.fillRect(0,620,w,90)}
+ else if(wi===3){ctx.fillStyle='#3e3544';for(let i=0;i<6;i++){let x=i*170;ctx.beginPath();ctx.moveTo(x-100,140);ctx.lineTo(x,30);ctx.lineTo(x+100,140);ctx.fill()}ctx.fillStyle='#ff8754';ctx.fillRect(0,640,w,70)}
+ else {for(let i=0;i<50;i++){let x=(i*137)%w,y=(i*73)%h;ctx.fillStyle=i%3?'#fff':'#a9d8ff';ctx.beginPath();ctx.arc(x,y,i%4===0?2:1,0,7);ctx.fill()}ctx.fillStyle='#7160a6';ctx.beginPath();ctx.arc(735,90,50,0,7);ctx.fill()}
+ ctx.restore();
+
+ // Atmospheric layers are restricted to the scenery BEHIND the grid.
+ const tt=performance.now()/1000;
+ ctx.save();
+ if(wi===0){ // woodland canopy, distant rolling hills, animated fireflies
+  for(let k=0;k<7;k++){const x=25+k*72,y=67+Math.sin(tt*1.3+k)*7;ctx.fillStyle='#fff6a8';ctx.shadowColor='#ffeb73';ctx.shadowBlur=13;ctx.beginPath();ctx.arc(x,y,2.3,0,7);ctx.fill()}ctx.shadowBlur=0;
+ }else if(wi===1){ // warm dunes and sun
+  ctx.fillStyle='#fff0b0';ctx.beginPath();ctx.arc(720,72,34,0,7);ctx.fill();
+  for(let k=0;k<3;k++){ctx.fillStyle=['#eab878','#d89e5c','#c68b53'][k];ctx.beginPath();ctx.moveTo(0,115+k*16);ctx.quadraticCurveTo(180,45+k*30,420,110+k*17);ctx.quadraticCurveTo(650,170+k*12,850,95+k*20);ctx.lineTo(850,160);ctx.lineTo(0,160);ctx.fill()}
+ }else if(wi===2){ // drifting snow in the open sky
+  for(let k=0;k<38;k++){const x=(k*89+tt*(9+k%4*5))%w,y=18+(k*37)%122;ctx.globalAlpha=.5+(k%4)*.1;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,1.5+(k%3),0,7);ctx.fill()}ctx.globalAlpha=1;
+ }else if(wi===3){ // distant lava glow and embers
+  ctx.fillStyle='#f57a3c';ctx.shadowColor='#ff9d35';ctx.shadowBlur=20;for(let k=0;k<7;k++){const x=20+k*130,y=100+Math.sin(k*2+tt)*5;ctx.beginPath();ctx.arc(x,y,3+(k%3),0,7);ctx.fill()}ctx.shadowBlur=0;
+ }else{ // orbiting planet and shooting stars
+  ctx.strokeStyle='#a4c9ff';ctx.lineWidth=3;ctx.globalAlpha=.6;ctx.beginPath();ctx.ellipse(735,90,66,18,-.35,0,7);ctx.stroke();ctx.globalAlpha=1;
+  for(let k=0;k<5;k++){const x=(k*173+tt*15)%w,y=25+(k*29)%105;ctx.strokeStyle='#d4e9ff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-15,y+7);ctx.stroke()}
+ }
+ ctx.restore();
+ worldScenery(wi,w,h,performance.now()/1000);
+ // Distinct visual identity for each ten-level world; decorations remain outside the play grid.
+ if(worldIndex(level)%2===1){
+  ctx.save();ctx.globalAlpha=.9;ctx.font='bold 29px system-ui';ctx.textAlign='center';
+  const marks=['🍄','🏺','🏰','🔥','🛰️'];const mark=marks[wi];
+  for(let k=0;k<3;k++){ctx.fillText(mark,72,126+k*200);ctx.fillText(mark,777,148+k*198)}
+  ctx.restore();
+ }
+ ctx.save();ctx.fillStyle=wi===4?'#152c5eea':'#ffffffeb';ctx.beginPath();ctx.roundRect(265,18,320,49,17);ctx.fill();ctx.fillStyle=wi===4?'#fff':'#24465d';ctx.font='bold 20px system-ui';ctx.textAlign='center';ctx.fillText(worldName(level)[0]+' '+worldName(level)[1],425,50);ctx.restore();
+ ctx.save();ctx.shadowColor='#12324d44';ctx.shadowBlur=12;ctx.shadowOffsetY=4;ctx.fillStyle=wi===4?'#242b65ee':'#ffffffed';ctx.beginPath();ctx.roundRect(196,14,458,52,18);ctx.fill();ctx.shadowBlur=0;ctx.shadowOffsetY=0;ctx.strokeStyle=wi===4?'#9db8ff':'#d8ebfa';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=wi===4?'#fff':'#214a65';ctx.font='bold 20px system-ui';ctx.textAlign='center';ctx.fillText('⭐ ΜΑΖΕΨΕ ΤΑ ΑΣΤΕΡΙΑ · ΒΡΕΣ ΤΟ 💎',425,47);ctx.restore();
+ const S=528/N,X=161,Y=95;
+ ctx.save();ctx.shadowColor='#132e4977';ctx.shadowBlur=23;ctx.shadowOffsetY=10;ctx.fillStyle='#244e63';ctx.beginPath();ctx.roundRect(X-12,Y-12,N*S+24,N*S+24,18);ctx.fill();ctx.restore();
+ for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+  let a=X+x*S,b=Y+y*S,rock=isRock(x,y),goal=x===data.goal.x&&y===data.goal.y,start=x===data.start.x&&y===data.start.y;
+  const base=rock?'#f1b5b1':goal?'#91e9f8':start?'#ffe1a0':(x+y)%2?['#9ad4a6','#f1c58e','#d7f3ff','#b58f94','#7978bd'][wi]:['#d3f3c4','#ffdfac','#f1fcff','#d0a7a7','#aba8eb'][wi];
+  const tileShade=ctx.createLinearGradient(a,b,a+S,b+S);tileShade.addColorStop(0,base);tileShade.addColorStop(.48,base);tileShade.addColorStop(1,rock?'#cf8386':goal?'#59bed5':start?'#e8b865':['#7cbf92','#d6aa6e','#b1dfed','#9e777e','#7774ae'][wi]);ctx.fillStyle=tileShade;ctx.fillRect(a+3,b+3,S-6,S-6);
+  ctx.save();ctx.globalAlpha=.26;ctx.fillStyle='#ffffff';ctx.fillRect(a+6,b+6,S-12,Math.max(4,S*.11));ctx.globalAlpha=.16;ctx.fillStyle='#17344e';ctx.fillRect(a+6,b+S-Math.max(10,S*.15),S-12,Math.max(4,S*.09));ctx.restore();
+  ctx.save();
+  // 2.5D beveled tiles: top edge catches light, lower edge has a soft raised shadow.
+  ctx.fillStyle=rock?'#9b55535e':'#153c5340';ctx.fillRect(a+5,b+S-Math.max(7,S*.115),S-10,Math.max(4,S*.075));
+  ctx.strokeStyle='#ffffffa8';ctx.lineWidth=Math.max(2,S*.035);ctx.beginPath();ctx.moveTo(a+6,b+S-7);ctx.lineTo(a+6,b+6);ctx.lineTo(a+S-6,b+6);ctx.stroke();
+  ctx.strokeStyle=rock?'#c96868':'#315c78';ctx.lineWidth=rock?3:2.5;ctx.strokeRect(a+3,b+3,S-6,S-6);ctx.restore();
+  if(!rock){
+   ctx.save();ctx.globalAlpha=.27;
+   // Small ground details: no tall objects on walkable squares.
+   if(wi===0){ctx.fillStyle='#2f8055';for(let k=0;k<3;k++){let dx=a+S*(.2+k*.26),dy=b+S*(.70+(k%2)*.08);ctx.beginPath();ctx.ellipse(dx,dy,4,2,0,0,7);ctx.fill()}}
+   else if(wi===1){ctx.strokeStyle='#a8763c';ctx.lineWidth=2;for(let k=0;k<2;k++){ctx.beginPath();ctx.arc(a+S*(.32+k*.28),b+S*.7,S*.13,0.1,2.4);ctx.stroke()}}
+   else if(wi===2){ctx.fillStyle='#fff';for(let k=0;k<4;k++){ctx.beginPath();ctx.arc(a+S*(.2+k*.19),b+S*(.25+(k%2)*.48),Math.max(1.5,S*.035),0,7);ctx.fill()}}
+   else if(wi===3){ctx.strokeStyle='#6a3e48';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a+S*.2,b+S*.7);ctx.lineTo(a+S*.35,b+S*.57);ctx.lineTo(a+S*.52,b+S*.73);ctx.stroke()}
+   else{ctx.fillStyle='#e8dfff';for(let k=0;k<3;k++){ctx.beginPath();ctx.arc(a+S*(.22+k*.24),b+S*(.26+(k%2)*.36),Math.max(1.5,S*.03),0,7);ctx.fill()}}
+   ctx.restore();
+  }
+  if(rock){ctx.save();ctx.fillStyle='#182c4166';ctx.beginPath();ctx.ellipse(a+S*.53,b+S*.82,S*.30,S*.10,0,0,7);ctx.fill();ctx.fillStyle='#243f4d55';ctx.beginPath();ctx.ellipse(a+S*.5,b+S*.78,S*.28,S*.09,0,0,7);ctx.fill();ctx.restore();ctx.fillStyle='#ffffff22';ctx.beginPath();ctx.roundRect(a+8,b+8,S-16,S-16,9);ctx.fill();ctx.save();ctx.shadowColor='#142f4577';ctx.shadowBlur=8;ctx.shadowOffsetY=5;cartoonProp(a+S/2,b+S/2+Math.min(17,S*.18),wi,Math.min(.55,S/145),performance.now()/1000);ctx.restore();ctx.fillStyle='#9b4e45';ctx.beginPath();ctx.arc(a+S-14,b+15,Math.min(6,S*.075),0,7);ctx.fill()}
+  else if(!goal&&!start){ctx.save();ctx.globalAlpha=.18;ctx.fillStyle=wi===0?'#327347':wi===1?'#b5824d':wi===2?'#78aacc':wi===3?'#6e4045':'#c4b9ff';ctx.beginPath();ctx.arc(a+S-14,b+15,5,0,7);ctx.fill();ctx.restore()}
+ }
+ // A clear start flag and a soft destination halo, always behind the symbols.
+ const startCX=X+(data.start.x+.5)*S,startCY=Y+(data.start.y+.5)*S;
+ const goalCX=X+(data.goal.x+.5)*S,goalCY=Y+(data.goal.y+.5)*S;
+ ctx.save();ctx.lineWidth=Math.max(3,S*.055);ctx.strokeStyle='#ffb92f';ctx.setLineDash([Math.max(6,S*.12),Math.max(4,S*.08)]);ctx.strokeRect(X+data.start.x*S+8,Y+data.start.y*S+8,S-16,S-16);ctx.setLineDash([]);
+ ctx.strokeStyle='#18b8dc';ctx.lineWidth=Math.max(4,S*.075);ctx.beginPath();ctx.arc(goalCX,goalCY,S*.35,0,Math.PI*2);ctx.stroke();ctx.restore();
+ const center=(x,y)=>[X+(x+.5)*S,Y+(y+.5)*S];
+ let [gx,gy]=center(data.goal.x,data.goal.y);ctx.font=''+Math.round(Math.min(40,S*.52))+'px system-ui';ctx.textAlign='center';ctx.save();ctx.shadowColor='#28e6ff';ctx.shadowBlur=22;ctx.fillText('💎',gx,gy+S*.15);ctx.restore();
+ data.stars.forEach((st,i)=>{if(!collected.includes(i)){const [a,b]=center(st.x,st.y);ctx.save();ctx.fillStyle='#fff4a4bb';ctx.shadowColor='#ffe27c';ctx.shadowBlur=13;ctx.beginPath();ctx.arc(a,b,S*.27,0,Math.PI*2);ctx.fill();ctx.restore();ctx.font=''+Math.round(Math.min(34,S*.45))+'px system-ui';ctx.save();ctx.shadowColor='#ffcc42';ctx.shadowBlur=17;ctx.fillText('⭐',a,b+S*.13);ctx.restore()}});
+ const [px,py]=center(position.x,position.y);ctx.save();ctx.fillStyle='#16395155';ctx.beginPath();ctx.ellipse(px,py+S*.29,S*.29,S*.10,0,0,7);ctx.fill();ctx.restore();ctx.fillStyle='#ffffffbb';ctx.beginPath();ctx.arc(px,py,Math.min(35,S*.37),0,7);ctx.fill();ctx.strokeStyle='#16446e';ctx.lineWidth=3;ctx.stroke();paintHero(px,py,position.d);drawAccessory(px,py);
+ // Strong direction marker at the edge of the current tile.
+ ctx.save();ctx.translate(px,py);ctx.rotate(position.d*Math.PI/2);ctx.fillStyle='#ffdb45';ctx.strokeStyle='#17344e';ctx.lineWidth=3;
+ ctx.beginPath();ctx.moveTo(0,-S*.39);ctx.lineTo(-S*.12,-S*.24);ctx.lineTo(S*.12,-S*.24);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
+ ctx.save();ctx.shadowColor='#152e4d55';ctx.shadowBlur=10;ctx.fillStyle=wi===4?'#26346ddd':'#ffffffeb';ctx.beginPath();ctx.roundRect(270,644,310,48,18);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle=wi===4?'#fff':'#214c66';ctx.font='bold 20px system-ui';ctx.textAlign='center';ctx.fillText('🧭 ΚΟΙΤΑΖΕΙ: '+['ΠΑΝΩ ↑','ΔΕΞΙΑ →','ΚΑΤΩ ↓','ΑΡΙΣΤΕΡΑ ←'][position.d],425,675);ctx.restore();
+ // Collision animation is drawn over the board without obscuring it permanently.
+ if(collisionEffect){
+  const age=performance.now()-collisionEffect.started,progress=Math.min(1,age/850);
+  const cx=X+(collisionEffect.x+.5)*S,cy=Y+(collisionEffect.y+.5)*S;
+  ctx.save();ctx.translate(cx,cy);ctx.globalAlpha=Math.max(0,1-progress);
+  ctx.strokeStyle='#ffcf30';ctx.lineWidth=7*(1-progress)+2;
+  ctx.beginPath();ctx.arc(0,0,15+progress*64,0,Math.PI*2);ctx.stroke();
+  ctx.font='bold 48px system-ui';ctx.textAlign='center';ctx.fillText('💥',0,-16-progress*22);
+  for(let k=0;k<9;k++){let angle=k*Math.PI*2/9,dist=15+progress*65;
+   ctx.fillStyle=k%2?'#ff6b44':'#ffe46b';ctx.beginPath();ctx.arc(Math.cos(angle)*dist,Math.sin(angle)*dist,5*(1-progress)+2,0,Math.PI*2);ctx.fill()}
+  ctx.restore();
+ }
+ ctx.font='bold 20px system-ui';ctx.textAlign='left';ctx.fillText('⭐ '+collected.length+'/'+data.stars.length,28,48);
+}
+function win(){
+ const p=player();if(!p)return;
+ completedRun=true;
+ const first=!p.done[level],previous=typeof p.done[level]==='number'?p.done[level]:(p.done[level]?3:0);
+ const score=Math.max(0,3-runHits),earned=Math.max(0,score-previous);
+ p.done[level]=Math.max(previous,score);
+ p.unlocked=Math.max(p.unlocked,Math.min(100,level+1));
+ p.stars=Math.max(0,(Number(p.stars)||0)+earned);
+ const newItems=accessories.filter(a=>a.need>0&&p.stars>=a.need&&p.stars-earned<a.need);
+ save();refresh();
+ $('reward-earned').textContent='⭐ '+score+'/3 αστέρια για την πίστα'+(earned?' · +'+earned+' νέα':'');
+ setMessage('🎉 Αποστολή ολοκληρώθηκε! '+score+'/3 ⭐','ok');
+ $('wintext').textContent='Ολοκλήρωσες την πίστα '+level+'! '+(runHits?'Συγκρούσεις: '+runHits+'. ':'')+
+ (newItems.length?'🎁 Ξεκλείδωσες: '+newItems.map(a=>a.icon+' '+a.name).join(', ')+'!':'Συνέχισε για να κερδίσεις νέα αξεσουάρ!');
+ $('advance').disabled=level===100;$('modal').classList.add('show');
+}
+let collisionToastTimer;
+function showCollisionToast(message){const el=$('collision-toast');if(!el)return;el.textContent=message;el.classList.add('visible');clearTimeout(collisionToastTimer);collisionToastTimer=setTimeout(()=>el.classList.remove('visible'),3000)}
+function sleep(t){return new Promise(r=>setTimeout(r,t))}function isRock(x,y){return data.rocks.some(p=>p.x===x&&p.y===y)}async function run(){
+ if(busy||!player())return;if(!program.length){setMessage('Πρόσθεσε πρώτα εντολές.','bad');return}
+ const steps=program.reduce((arr,c,i)=>{for(let j=0;j<(c==='2'||c==='3'?Number(c):1);j++)arr.push({cmd:c==='2'||c==='3'?'F':c,index:i,repeat:c==='2'||c==='3'?j+1:0});return arr},[]);
+ if(steps.length>120){setMessage('Το πρόγραμμα έχει πάρα πολλά βήματα (μέγιστο 120).','bad');return}
+ busy=true;completedRun=false;position={...data.start,d:0};collected=[];draw();
+ try{
+ for(const step of steps){highlightCommand(step.index,step.repeat);await sleep(390);const c=step.cmd;
+  if(c==='L')position.d=(position.d+3)%4;else if(c==='R')position.d=(position.d+1)%4;
+  else{const amount=1;for(let i=0;i<amount;i++){
+   const nx=position.x+dirs[position.d][0],ny=position.y+dirs[position.d][1];
+   if(nx<0||nx>=N||ny<0||ny>=N||isRock(nx,ny)){
+    runHits=Math.min(3,runHits+1);showCollisionToast((nx<0||nx>=N||ny<0||ny>=N?'🚧 Βγήκες έξω από την πίστα!':'🌲 Πρόσεχε! Χτύπησες σε εμπόδιο!')+'  −1 ⭐ · Επιστροφή στην αρχή');collisionEffect={x:Math.max(0,Math.min(N-1,nx)),y:Math.max(0,Math.min(N-1,ny)),started:performance.now()};
+    setMessage('💥 Σύγκρουση! Χάνεις 1 αστέρι από το βραβείο της πίστας. Απομένουν '+Math.max(0,3-runHits)+'/3 ⭐','bad');
+    executionStatus('💥 Σύγκρουση στην εντολή '+(step.index+1)+' — επιστροφή στην αρχή');
+    draw();await sleep(1050);
+    collisionEffect=null;position={...data.start,d:0};collected=[];draw();
+    setMessage('🔄 Επιστροφή στην αρχή. Κρατάς τις εντολές σου. Βραβείο: '+Math.max(0,3-runHits)+'/3 ⭐','bad');
+    executionStatus('🔄 Στην αρχική θέση — έτοιμο για νέα προσπάθεια');
+    return;
+   }
+   position.x=nx;position.y=ny;data.stars.forEach((s,j)=>{if(s.x===nx&&s.y===ny&&!collected.includes(j))collected.push(j)});draw();if(amount===2)await sleep(160);
+  }}draw();if(position.x===data.goal.x&&position.y===data.goal.y&&collected.length===data.stars.length){win();executionStatus('🏆 Επιτυχία! Ολοκληρώθηκε στην εντολή '+(step.index+1));return}
+ }
+ setMessage('Χρειάζεται να μαζέψεις όλα τα αστέρια και να φτάσεις στο διαμάντι. Διόρθωσε τις εντολές!','bad');executionStatus('⏹ Το πρόγραμμα ολοκληρώθηκε χωρίς να φτάσει στον στόχο');
+ }finally{busy=false;activeCommand=-1;activeRepeat=0;renderProgram();$('suit').disabled=!player();$('hero').disabled=!player();}
+}
+// Unified pointer drag-and-drop: works with mouse, touchscreen and stylus.
+// Do not mix native HTML drag-and-drop with Pointer Events.
+let pointerDrag=null,dragGhost=null,hoverSlot=null;
+function clearDropHighlight(){document.querySelectorAll('.insert-slot.drop-target').forEach(el=>el.classList.remove('drop-target'));hoverSlot=null}
+function markDropSlot(slot){if(hoverSlot===slot)return;clearDropHighlight();if(slot){slot.classList.add('drop-target');hoverSlot=slot}}
+function slotAtPoint(x,y){
+ const host=$('program'),r=host.getBoundingClientRect();
+ if(x<r.left-18||x>r.right+18||y<r.top-18||y>r.bottom+18)return null;
+ const slots=[...host.querySelectorAll('.insert-slot')];if(!slots.length)return null;
+ return slots.reduce((best,cur)=>Math.abs(cur.getBoundingClientRect().top+cur.getBoundingClientRect().height/2-y)<Math.abs(best.getBoundingClientRect().top+best.getBoundingClientRect().height/2-y)?cur:best,slots[0]);
+}
+function commitDrop(payload,index){
+ if(busy||!player()||!payload||!Number.isInteger(index))return false;
+ index=Math.max(0,Math.min(index,program.length));
+ if(payload.kind==='new'){
+  if(program.length>=60){setMessage('Το πρόγραμμα χωρά έως 60 εντολές.','bad');return false}
+  if(!Object.prototype.hasOwnProperty.call(labels,payload.cmd))return false;
+  program.splice(index,0,payload.cmd);lastInsertedIndex=index;insertAt=index+1;
+ }else if(payload.kind==='move'){
+  const from=payload.index;if(from<0||from>=program.length)return false;
+  const cmd=program.splice(from,1)[0];if(from<index)index--;program.splice(index,0,cmd);insertAt=index+1;lastInsertedIndex=-1;
+ }else return false;
+ renderProgram();setMessage('✅ Η εντολή μπήκε στο πρόγραμμα.','ok');return true;
+}
+function dragPayloadFor(el){if(el.matches('[data-cmd]'))return {kind:'new',cmd:el.dataset.cmd};if(el.classList.contains('chip'))return {kind:'move',index:Number(el.dataset.index)};return null}
+function installDrag(){document.querySelectorAll('[data-cmd]').forEach(el=>{
+ el.draggable=false;el.title='Σύρε στο πρόγραμμα ή πάτησε για προσθήκη στο τέλος';
+ el.onclick=e=>{e.preventDefault();if(!player()){setMessage('Επίλεξε πρώτα μαθητή.','bad');return}if(!busy)commitDrop({kind:'new',cmd:el.dataset.cmd},program.length)};
+})}
+installDrag();
+document.addEventListener('dragstart',e=>{if(e.target.closest('[data-cmd],#program .chip'))e.preventDefault()});
+document.addEventListener('pointerdown',e=>{
+ if(busy||!player()||e.button!==0)return;
+ const el=e.target.closest('[data-cmd],#program .chip');if(!el||e.target.closest('.chip button'))return;
+ const payload=dragPayloadFor(el);if(!payload)return;
+ pointerDrag={payload,startX:e.clientX,startY:e.clientY,id:e.pointerId,source:el,started:false};
+},true);
+document.addEventListener('pointermove',e=>{
+ const p=pointerDrag;if(!p||p.id!==e.pointerId)return;
+ if(!p.started){if(Math.hypot(e.clientX-p.startX,e.clientY-p.startY)<7)return;
+  p.started=true;p.source.classList.add('being-dragged');dragGhost=document.createElement('div');
+  dragGhost.className='drag-ghost';dragGhost.textContent=labels[p.payload.kind==='new'?p.payload.cmd:program[p.payload.index]]||'Εντολή';
+  dragGhost.style.pointerEvents='none';document.body.append(dragGhost);
+ }
+ e.preventDefault();dragGhost.style.left=(e.clientX+12)+'px';dragGhost.style.top=(e.clientY+12)+'px';
+ markDropSlot(slotAtPoint(e.clientX,e.clientY));
+},{passive:false});
+function finishPointer(e,cancel=false){
+ const p=pointerDrag;if(!p||p.id!==e.pointerId)return;
+ if(p.started&&!cancel){const slot=slotAtPoint(e.clientX,e.clientY)||hoverSlot;if(slot)commitDrop(p.payload,Number(slot.dataset.slot));else setMessage('Άφησε την εντολή μέσα στο πλαίσιο «Το πρόγραμμά μου».','bad')}
+ if(p.started){e.preventDefault();p.source.classList.remove('being-dragged')}
+ pointerDrag=null;if(dragGhost){dragGhost.remove();dragGhost=null}clearDropHighlight();
+}
+document.addEventListener('pointerup',e=>finishPointer(e),true);
+document.addEventListener('pointercancel',e=>finishPointer(e,true),true);
+$('hero').onchange=()=>{if(busy||!player())return;player().hero=$('hero').value;save();draw()};$('suit').onchange=()=>{if(busy||!player())return;player().suit=$('suit').value;save();draw()};
+$('run').onclick=run;$('undo').onclick=()=>{if(!busy){if(program.length){const i=lastInsertedIndex>=0&&lastInsertedIndex<program.length?lastInsertedIndex:program.length-1;program.splice(i,1);insertAt=Math.min(i,program.length);lastInsertedIndex=-1;}renderProgram()}};$('clear').onclick=()=>{if(!busy){program=[];insertAt=0;lastInsertedIndex=-1;renderProgram();executionStatus('⏸ Έτοιμο για εκτέλεση')}};$('reset').onclick=()=>{if(!busy){position={...data.start,d:0};collected=[];draw();setMessage('Ο ήρωας επέστρεψε στην αρχή.')}};$('next').onclick=()=>{if(player()&&level<100&&level+1<=player().unlocked)loadLevel(level+1);else setMessage('Ολοκλήρωσε πρώτα αυτή την πίστα.','bad')};$('advance').onclick=()=>{$('modal').classList.remove('show');if(level<100)loadLevel(level+1)};$('close').onclick=()=>$('modal').classList.remove('show');$('add').onclick=()=>{if(busy)return;let n=$('name').value.trim();if(!n){alert('Γράψε όνομα μαθητή.');return}if(!profiles[n]||typeof profiles[n]!=='object')profiles[n]={unlocked:1,stars:0,done:{},bonus:{}};$('name').value='';select(n)};$('name').addEventListener('keydown',e=>{if(e.key==='Enter')$('add').click()});$('erase').onclick=()=>{if(busy||!player())return;if(confirm('Να διαγραφεί οριστικά το προφίλ «'+current+'» και η πρόοδός του;')){delete profiles[current];current=Object.keys(profiles)[0]||'';save();if(current)select(current);else{refresh();setMessage('Δημιούργησε προφίλ για να ξεκινήσεις.');draw()}}};
+
+for(const item of document.querySelectorAll('.tool-details'))item.addEventListener('toggle',()=>{if(item.open)document.querySelectorAll('.tool-details').forEach(other=>{if(other!==item)other.open=false})});
+
+// Read-only teacher overview: all 100 levels, regardless of student unlock status.
+let teacherSelected=1;
+function teacherPreview(n){
+ n=Math.max(1,Math.min(100,Number(n)||1));
+ teacherSelected=n;
+ // Update the teacher controls first, independently of the 2D/3D renderer.
+ const wn=worldName(n);
+ $('teacher-title').textContent=wn[0]+' Πίστα '+n+' — '+wn[1];
+ $('teacher-title').setAttribute('aria-live','polite');
+ $('teacher-prev').disabled=n===1;
+ $('teacher-next').disabled=n===100;
+ $('teacher-levels').querySelectorAll('button').forEach((b,i)=>{
+   const selected=i+1===n;
+   b.classList.toggle('selected',selected);
+   b.setAttribute('aria-current',selected?'true':'false');
+ });
+ let previewData;
+ try{
+   previewData=makeLevel(n);
+   $('teacher-info').textContent='Εμπόδια: '+previewData.rocks.length+' · Αστέρια: '+previewData.stars.length+' · Χάρτης: '+previewData.size+'×'+previewData.size+' · Διαδρομή: '+(previewData.path.length-1)+' βήματα · Δυσκολία: '+(n<=20?'Αρχάριος':n<=40?'Μέτρια':n<=60?'Προχωρημένη':n<=80?'Δύσκολη':'Πολύ δύσκολη');
+ }catch(err){$('teacher-info').textContent='Σφάλμα δημιουργίας πίστας: '+err.message;return}
+ const preview=$('teacher-canvas'),g=preview.getContext('2d');
+ if(!g)return;
+ const old={ctx,level,data,N,position,collected,collisionEffect,busy};
+ try{
+  ctx=g;level=n;data=previewData;N=data.size;position={...data.start,d:0};collected=[];collisionEffect=null;busy=false;
+  draw();
+  if($('teacher-path').checked){
+   const S=528/N,X=161,Y=95;
+   g.save();g.strokeStyle='#ffcc32';g.lineWidth=7;g.lineJoin='round';g.lineCap='round';g.shadowColor='#172d50';g.shadowBlur=6;
+   g.beginPath();data.path.forEach((p,i)=>{const x=X+(p.x+.5)*S,y=Y+(p.y+.5)*S;i?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();g.restore();
+   g.save();g.font='36px system-ui';g.textAlign='center';g.fillText('💎',X+(data.goal.x+.5)*S,Y+(data.goal.y+.5)*S+12);g.restore();
+   paintHero(X+(data.start.x+.5)*S,Y+(data.start.y+.5)*S,0);
+  }
+ }catch(err){console.warn('2D teacher preview unavailable; 3D preview continues:',err)}
+ finally{ctx=old.ctx;level=old.level;data=old.data;N=old.N;position=old.position;collected=old.collected;collisionEffect=old.collisionEffect;busy=old.busy}
+}
+
+const PIN_KEY='astrocode_teacher_pin_v1';let teacherAuthorized=false,failedPins=0;
+function pinValue(){try{return localStorage.getItem(PIN_KEY)||''}catch(e){return ''}}
+function pinDigest(pin){let h=2166136261;for(const ch of 'astrocode-v1:'+pin){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return (h>>>0).toString(16)}
+function showTeacher(){if(!teacherAuthorized)return;$('teacher-modal').classList.add('open');$('teacher-levels').innerHTML='';for(let i=1;i<=100;i++){let b=document.createElement('button');b.className='teacher-level';b.textContent=worldName(i)[0]+' Πίστα '+i;b.onclick=()=>teacherPreview(i);$('teacher-levels').append(b)}teacherPreview(teacherSelected)}
+function openPin(){const setup=!pinValue();$('pin-heading').textContent=setup?'🔐 Δημιουργία PIN εκπαιδευτικού':'🔐 Είσοδος εκπαιδευτικού';$('pin-help').textContent=setup?'Όρισε PIN 4–8 ψηφίων για να ανοίγει ο πίνακας εκπαιδευτικού σε αυτή τη συσκευή.':'Πληκτρολόγησε το PIN για να δεις τις 100 πίστες.';$('pin-confirm-wrap').style.display=setup?'block':'none';$('teacher-pin').value='';$('teacher-pin-confirm').value='';$('pin-error').textContent='';$('teacher-lock').classList.add('open');$('teacher-pin').focus()}
+$('teacher-open').onclick=()=>{if(teacherAuthorized)showTeacher();else openPin()};
+$('pin-cancel').onclick=()=>$('teacher-lock').classList.remove('open');
+$('pin-submit').onclick=()=>{const pin=$('teacher-pin').value,setup=!pinValue();if(!/^\d{4,8}$/.test(pin)){$('pin-error').textContent='Χρειάζονται 4 έως 8 αριθμητικά ψηφία.';return}if(setup){if(pin!==$('teacher-pin-confirm').value){$('pin-error').textContent='Τα PIN δεν ταιριάζουν.';return}try{localStorage.setItem(PIN_KEY,pinDigest(pin))}catch(e){$('pin-error').textContent='Δεν είναι διαθέσιμη η τοπική αποθήκευση.';return}}else if(pinDigest(pin)!==pinValue()){failedPins++;$('pin-error').textContent='Λανθασμένο PIN. Προσπάθησε ξανά.';$('teacher-pin').value='';return}failedPins=0;teacherAuthorized=true;$('teacher-lock').classList.remove('open');showTeacher()};
+$('teacher-pin').addEventListener('keydown',e=>{if(e.key==='Enter')$('pin-submit').click()});$('teacher-pin-confirm').addEventListener('keydown',e=>{if(e.key==='Enter')$('pin-submit').click()});
+$('teacher-lock').addEventListener('click',e=>{if(e.target===$('teacher-lock'))$('teacher-lock').classList.remove('open')});
+$('teacher-close').onclick=()=>{$('teacher-modal').classList.remove('open');teacherAuthorized=false};
+$('teacher-modal').addEventListener('click',e=>{if(e.target===$('teacher-modal')){$('teacher-modal').classList.remove('open');teacherAuthorized=false}});
+$('teacher-path').onchange=()=>teacherPreview(teacherSelected);$('teacher-prev').onclick=()=>teacherPreview(Math.max(1,teacherSelected-1));$('teacher-next').onclick=()=>teacherPreview(Math.min(100,teacherSelected+1));
+
+// Initialize student view only after the teacher preview and authorization are ready.
+if(current&&profiles[current])select(current);else{current='';refresh();renderProgram();draw();setMessage('Δημιούργησε ένα προφίλ μαθητή για να παίξεις.')}window.addEventListener('resize',draw);let lastFrame=0;function animateFrame(now){if(now-lastFrame>45){draw();lastFrame=now}requestAnimationFrame(animateFrame)}requestAnimationFrame(animateFrame);
+
+(function(){
+ const btn=document.getElementById('view-toggle'),stage=document.getElementById('stage-3d');
+ if(!btn||!stage)return;
+ btn.addEventListener('click',()=>{
+  const top=stage.classList.toggle('top-down');
+  btn.textContent=top?'🎮 Προβολή 3D':'🗺️ Κάτοψη';
+  btn.setAttribute('aria-pressed',String(!top));
+ });
+ const worldNo=document.getElementById('world-number');
+ if(worldNo){
+  const title=document.getElementById('title');
+  const observer=new MutationObserver(()=>{if(typeof level==='number')worldNo.textContent=String(Math.floor((level-1)/10)+1)});
+  if(title)observer.observe(title,{childList:true,characterData:true,subtree:true});
+ }
+})();
+window.astroAccessory=()=>player()?.accessory||'none';window.astroImpact=()=>collisionEffect;
+</script><script type="module">/* Astro Code 3D renderer — Three.js, fallback to existing 2D Canvas when offline. */
+(async function(){
+  let THREE;
+  try { THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js'); }
+  catch(e){console.warn('3D unavailable; keeping the 2D game.',e);return;}
+  const themes=[{ground:0x69ad68,light:0xa8e5a3,sky:0x9cdef9},{ground:0xdab36b,light:0xf7d998,sky:0xf9cf9d},{ground:0xaed9e9,light:0xe8faff,sky:0xc2e9ff},{ground:0x765a60,light:0xb08b83,sky:0x594454},{ground:0x625b9d,light:0x9991d6,sky:0x14163f}];
+  const mat=(color,other={})=>new THREE.MeshStandardMaterial({color,roughness:.72,...other});
+  const sphere=new THREE.SphereGeometry(1,20,16),box=new THREE.BoxGeometry(1,1,1),cone=new THREE.ConeGeometry(1,1,12),cyl=new THREE.CylinderGeometry(1,1,1,12);
+  function mesh(g,m,x=0,y=0,z=0,sx=1,sy=1,sz=1){const o=new THREE.Mesh(g,m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);o.castShadow=true;o.receiveShadow=true;return o}
+  function createView(host){
+    const scene=new THREE.Scene();scene.background=new THREE.Color(0x99d5f4);
+    const camera=new THREE.OrthographicCamera(-6.6,6.6,5.7,-5.7,.1,150);camera.position.set(10,17,16);camera.lookAt(0,0,0);
+    const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.14;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.domElement.style.cssText='display:block;width:100%;height:100%;';host.appendChild(renderer.domElement);
+    scene.add(new THREE.HemisphereLight(0xffffff,0x62778a,2.15));const sun=new THREE.DirectionalLight(0xffffff,2.4);sun.position.set(-5,16,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.bias=-.00035;sun.shadow.normalBias=.018;sun.shadow.radius=2.5;sun.shadow.camera.left=-14;sun.shadow.camera.right=14;sun.shadow.camera.top=14;sun.shadow.camera.bottom=-14;scene.add(sun);const fill=new THREE.DirectionalLight(0xb8e7ff,.72);fill.position.set(7,8,-7);scene.add(fill);
+    const root=new THREE.Group();scene.add(root);
+    let hero,arrow,stars=[],goalObject=null,goalHalo=null,goalRays=[],lastKey='',currentLevel=0,staticData=null,impactRing=null,heroLastFrame=0;
+    function pos(x,y,N){return [x-(N-1)/2,(y-(N-1)/2)]}
+    function tree(w,scale=1,variant=0){const g=new THREE.Group();if(w===0||w===2){g.add(mesh(cyl,mat(0x80523c),0,.42,0,.18,.8,.18));g.add(mesh(sphere,mat(0x54864b),0,.15,0,.42,.13,.42));for(let k=0;k<3;k++){g.add(mesh(cone,mat(w===2?(k%2?0x368b7b:0xd8f8fb):(k%2?0x3f9a69:0x21734e),{roughness:.85}),0,.77+k*(variant===1?.30:.37),0,(.66-k*.12)*(variant===2?.82:variant===1?1.13:1),variant===2?.9:.72,(.66-k*.12)*(variant===2?.82:variant===1?1.13:1)));}if(w===2)g.add(mesh(cone,mat(0xf5ffff),0,1.9,0,.19,.24,.19));}
+    else if(w===1){g.add(mesh(cyl,mat(0x27896a),0,.75,0,.19,1.35,.19));g.add(mesh(sphere,mat(0x27896a),-.3,.95,0,.15,.45,.16));g.add(mesh(sphere,mat(0x27896a),.3,1.18,0,.15,.34,.16));}
+    else if(w===3){g.add(mesh(cone,mat(0x4a414d),0,.53,0,.65,1.05,.65));g.add(mesh(cone,mat(0xff693c,{emissive:0xa22a0b,emissiveIntensity:.4}),0,1.08,0,.21,.25,.21));}
+    else{g.add(mesh(cone,mat(0x7ef6f1,{emissive:0x207aab,emissiveIntensity:.6}),0,.65,0,.36,1.3,.36));g.add(mesh(cone,mat(0xbda1ff,{emissive:0x3922a5,emissiveIntensity:.4}),.3,.36,.2,.23,.7,.23));}
+    if(w===0||w===2){
+      // Three recognizable silhouettes, avoiding a forest of identical cones.
+      const foliage=[...g.children].filter(o=>o.geometry===cone);
+      foliage.forEach((o,i)=>{o.scale.x*=variant===1?1.16:variant===2?.88:1;o.scale.z*=variant===1?1.16:variant===2?.88:1;o.position.y+=(variant===2?.10:variant===1?-.06:0)});
+      if(variant===1)g.add(mesh(sphere,mat(0x66bd76),.18,.55,.10,.33,.25,.31));
+      if(variant===2)g.add(mesh(sphere,mat(0x287e57),-.15,.52,-.08,.25,.19,.24));
+    }
+    g.scale.setScalar(scale);return g;}
+    // Detailed yet readable stylized mushrooms: curved stems, domed caps,
+    // underside gills and spots that follow the curved surface.
+    function mushroom(scale=1,variant=0){
+      const g=new THREE.Group(),v=variant%4;
+      const caps=[0xc94c51,0x9862a6,0xd9a04a,0x6b9eaa];
+      const stemMat=mat(0xe9dcc3,{roughness:.95}),capMat=mat(caps[v],{roughness:.82});
+      const stem=mesh(new THREE.CylinderGeometry(.13,.20,.62,12),stemMat,.03,.35,0);
+      stem.rotation.z=(v-1.5)*.075;g.add(stem);
+      g.add(mesh(sphere,mat(0xc6ad87,{roughness:.97}),0,.085,0,.29,.07,.26));
+      const cap=mesh(new THREE.SphereGeometry(1,24,12,0,Math.PI*2,0,Math.PI/2),capMat,.055,.70,0,.52,.35,.49);
+      cap.rotation.z=(v-1.5)*.06;g.add(cap);
+      g.add(mesh(sphere,mat(0xd5bca2,{roughness:1,side:THREE.DoubleSide}),.055,.69,0,.50,.045,.47));
+      for(let j=0;j<10;j++){
+        const ang=j*Math.PI*2/10,rad=.18+(j%3)*.092;
+        const x=.055+Math.cos(ang)*rad,z=Math.sin(ang)*rad;
+        const y=.70+.35*Math.sqrt(Math.max(0,1-(rad/.52)**2))+.009;
+        const spot=mesh(sphere,mat(0xffedce,{roughness:1}),x,y,z,.055+(j%3)*.012,.018,.046+(j%2)*.012);
+        spot.rotation.y=ang;g.add(spot);
+      }
+      // Fine underside gills and a small natural base, kept subtle at board scale.
+      const gillMat=mat(0xb79b82,{roughness:1});
+      for(let j=0;j<12;j++){
+        const a=j*Math.PI/6;
+        const gill=mesh(new THREE.BoxGeometry(.27,.009,.012),gillMat,.055+Math.cos(a)*.28,.661,Math.sin(a)*.28);
+        gill.rotation.y=-a;gill.castShadow=false;g.add(gill);
+      }
+      for(let j=0;j<3;j++){
+        const a=j*2.25+v;
+        const tuft=mesh(cone,mat(j===1?0x6eaa65:0x43845b,{roughness:1}),Math.cos(a)*.23,.11,Math.sin(a)*.21,.045,.20,.045);
+        tuft.rotation.z=Math.sin(a)*.22;g.add(tuft);
+      }
+      if(v===2){g.add(mesh(sphere,mat(0xf2c86b),-.26,.14,.22,.09,.12,.10));}
+      g.scale.setScalar(scale);return g;
+    }
+    // Faceted irregular boulders with subtle colored mineral veins and flat bottoms.
+    function boulder(color=0x665c64,variant=0,scale=1){
+      const g=new THREE.Group();
+      const geo=new THREE.IcosahedronGeometry(.53,1),p=geo.attributes.position;
+      for(let i=0;i<p.count;i++){
+        const x=p.getX(i),y=p.getY(i),z=p.getZ(i);
+        const noise=1+.13*Math.sin(x*11+variant*3)*Math.cos(z*13+variant);
+        p.setXYZ(i,x*noise,y*.72*noise,z*noise);
+      }
+      geo.computeVertexNormals();
+      g.add(mesh(geo,mat(color,{roughness:.98,flatShading:true}),0,.34,0,1,1,1));
+      const pebble=mesh(new THREE.DodecahedronGeometry(.18),mat(variant%2?0x847b80:0x948a86,{roughness:1}),.34,.14,.18,.85,.65,.8);
+      g.add(pebble);
+      // A couple of mineral flecks on the rock face (no heavy textures or clutter).
+      const fleckMat=mat(variant%2?0xb1a39a:0xafa6ad,{roughness:1});
+      for(let k=0;k<3;k++){
+        const a=k*2.09+variant*.6;
+        const fleck=mesh(new THREE.DodecahedronGeometry(.055,0),fleckMat,Math.sin(a)*.34,.33+(k%2)*.15,Math.cos(a)*.33,.9,.35,.75);
+        fleck.castShadow=false;g.add(fleck);
+      }
+      g.scale.setScalar(scale);return g;
+    }
+    function volcanoProp(variant=0,active=false){
+      const g=new THREE.Group();
+      const dark=mat(active?0x493d44:0x5b5258,{roughness:.98,flatShading:true});
+      const mountain=mesh(new THREE.CylinderGeometry(.20,.58,.93,9,3),dark,0,.47,0);
+      g.add(mountain);
+      const rim=mesh(new THREE.TorusGeometry(.205,.065,6,16),mat(0x302b31,{roughness:1}),0,.94,0);
+      rim.rotation.x=Math.PI/2;g.add(rim);
+      const lavaMat=mat(active?0xff7040:0xf3a35b,{emissive:active?0xd5390c:0x8b401b,emissiveIntensity:active?1:.25,roughness:.45});
+      const lava=mesh(new THREE.CircleGeometry(.18,18),lavaMat,0,.953,0);lava.rotation.x=-Math.PI/2;g.add(lava);
+      for(let k=0;k<3;k++){
+        const angle=(k*2.2+variant*.65),run=mesh(new THREE.BoxGeometry(.045,.33,.055),lavaMat,Math.cos(angle)*.30,.65,Math.sin(angle)*.30);
+        run.rotation.z=Math.cos(angle)*.28;g.add(run);
+      }
+      // Thin lava seams follow the mountain sides rather than hovering beside it.
+      for(let k=0;k<(active?3:1);k++){
+        const a=k*2.094+variant*.32;
+        const stream=mesh(new THREE.CylinderGeometry(.025,.045,.46,6),lavaMat,
+          Math.cos(a)*.29,.59,Math.sin(a)*.29);
+        stream.rotation.z=Math.cos(a)*.32;
+        stream.rotation.x=-Math.sin(a)*.32;
+        stream.castShadow=false;g.add(stream);
+      }
+      if(active){
+        for(let i=0;i<3;i++){
+          const puff=mesh(sphere,mat(0x71666d,{transparent:true,opacity:.56,roughness:1}),.06+i*.09,1.22+i*.19,0,.17+i*.06,.11+i*.04,.15+i*.04);
+          puff.castShadow=false;g.add(puff);
+        }
+      }
+      return g;
+    }
+    // Ten distinct worlds: obstacles and perimeter scenery use the same theme.
+    function themedProp(world,scale=1,variant=0){
+      const g=new THREE.Group(),v=variant%4;
+      const rock=(color,h=.8)=>{const b=boulder(color,v,1);b.scale.y=h/.75;g.add(b);};
+      if(world===0)return tree(0,scale,variant);
+      if(world===1)return mushroom(scale,variant);
+      if(world===2){ // distinct rounded cacti, with short arms and a sandy foot
+        const cactus=mat(v%2?0x27977b:0x2f9f78,{roughness:.86});
+        g.add(mesh(cyl,cactus,0,.62,0,.17,1.22,.17));
+        g.add(mesh(sphere,cactus,0,1.23,0,.17,.18,.17));
+        if(v!==3){const a=v===1?-.32:.32;
+          g.add(mesh(cyl,cactus,a,.76,0,.13,.18,.13));
+          g.add(mesh(cyl,cactus,a*1.45,.98,0,.12,.50,.12));
+          g.add(mesh(sphere,cactus,a*1.45,1.24,0,.12,.13,.12));
+        }
+        if(v===2){g.add(mesh(cyl,cactus,-.29,.45,0,.11,.15,.11));g.add(mesh(cyl,cactus,-.40,.64,0,.11,.43,.11));}
+        g.add(mesh(sphere,mat(0xe8b973),0,.07,0,.35,.08,.31));
+        g.scale.setScalar(scale);return g;
+      }
+      if(world===3){ // oasis: palm or sandstone column
+        if(v===0){g.add(mesh(cyl,mat(0xe9c58b),0,.56,0,.28,1.1,.28));g.add(mesh(cyl,mat(0xc99e63),0,1.15,0,.39,.18,.39));}
+        else{g.add(mesh(cyl,mat(0x9b6d42),0,.72,0,.13,1.44,.13));
+          for(let k=0;k<6;k++){const leaf=mesh(sphere,mat(0x329d64),Math.cos(k*Math.PI/3)*.46,1.49,Math.sin(k*Math.PI/3)*.46,.52,.10,.20);leaf.rotation.y=k*Math.PI/3;g.add(leaf)}}
+      }else if(world===4)return tree(2,scale,variant);
+      else if(world===5){ // ice castle towers
+        g.add(mesh(cyl,mat(0x9bd9f2,{metalness:.18}),0,.46,0,.42,.9,.42));
+        g.add(mesh(cone,mat(0x4e8ecf),0,1.14,0,.56,.57,.56));
+        g.add(mesh(box,mat(0xe3ffff,{emissive:0x4cbfe8,emissiveIntensity:.25}),0,.55,.43,.18,.27,.06));
+        for(const side of [-1,1]){
+          const crystal=mesh(new THREE.OctahedronGeometry(.12),mat(0xd9f9ff,{metalness:.12,roughness:.28,transparent:true,opacity:.83}),side*.28,.34,.32,.65,1.3,.55);
+          crystal.castShadow=false;g.add(crystal);
+        }
+      }else if(world===6){if(v%2===0)g.add(volcanoProp(v,false));else g.add(boulder(v===1?0x64575d:0x4d4850,v,1.05));}
+      else if(world===7){if(v%3===0)g.add(boulder(0x51454c,v,1.12));else g.add(volcanoProp(v,true));}else if(world===8){ // asteroid and alien crystals, never trees
+        if(v===0||v===2){g.add(boulder(v===0?0x736d90:0x8b799f,v,1.08));}
+        else{g.add(mesh(new THREE.OctahedronGeometry(.56),mat(v===1?0x69e9ff:0xa78dff,{metalness:.28,emissive:0x345dc3,emissiveIntensity:.58}),0,.68,0,.8,1.25,.8));}
+      }else{ // space station: metal modules, antennas, tech pylons
+        g.add(mesh(box,mat(0x667b9a,{metalness:.65,roughness:.3}),0,.44,0,.7,.84,.7));
+        g.add(mesh(box,mat(0x1a2948,{metalness:.4}),0,.83,.37,.56,.22,.08));
+        for(let k of [-1,1])g.add(mesh(sphere,mat(0x42e7ff,{emissive:0x12b8ef,emissiveIntensity:1.3}),k*.2,.83,.42,.07,.07,.05));
+        if(v%2===0){g.add(mesh(cyl,mat(0xc1d7ef,{metalness:.6}),0,1.24,0,.04,.82,.04));g.add(mesh(sphere,mat(0xffa05b,{emissive:0xff7b28,emissiveIntensity:1}),0,1.67,0,.13,.13,.13));}
+      }
+      g.scale.setScalar(scale);return g;
+    }
+    function makeHero(kind,color){const g=new THREE.Group(),suits={classic:0xf1f6ff,blue:0x4598ff,orange:0xffa342,purple:0xae85ff,green:0x5ddd9a};const primary=mat(suits[color]||suits.classic),dark=mat(0x26334d),visor=mat(0x64c7ec,{metalness:.3,roughness:.17}),white=mat(0xfafcff);
+      if(kind==='robot'){
+        g.add(mesh(box,primary,0,.65,0,.58,.7,.46));g.add(mesh(box,white,0,1.27,0,.74,.57,.57));g.add(mesh(box,visor,0,1.29,.30,.48,.19,.055));for(let s of [-1,1]){g.add(mesh(sphere,dark,s*.16,1.3,.34,.07,.075,.035));g.add(mesh(box,primary,s*.45,.66,0,.2,.56,.22));g.add(mesh(box,dark,s*.18,.18,0,.2,.35,.22));}g.add(mesh(sphere,mat(0xffc947,{emissive:0xff9d00,emissiveIntensity:.4}),0,1.7,0,.11,.11,.11));
+      }else if(kind==='alien'){
+        g.add(mesh(sphere,primary,0,.74,0,.42,.55,.34));g.add(mesh(sphere,primary,0,1.38,0,.57,.50,.47));for(let s of [-1,1]){g.add(mesh(sphere,dark,s*.23,1.42,.39,.16,.21,.09));g.add(mesh(sphere,primary,s*.48,.72,0,.15,.40,.16));g.add(mesh(sphere,primary,s*.19,.21,0,.17,.25,.20));}g.add(mesh(sphere,mat(0xffc6dc),0,1.12,.42,.11,.05,.03));
+      }else if(kind==='dino'){
+        g.add(mesh(sphere,primary,0,.83,0,.46,.61,.38));g.add(mesh(sphere,primary,0,1.43,.17,.50,.43,.52));g.add(mesh(sphere,primary,0,1.26,.56,.39,.20,.30));for(let s of [-1,1]){g.add(mesh(sphere,white,s*.22,1.53,.56,.14,.15,.09));g.add(mesh(sphere,dark,s*.22,1.54,.65,.06,.08,.04));g.add(mesh(sphere,primary,s*.22,.24,0,.20,.27,.25));}const tail=mesh(cone,primary,0,.6,-.61,.27,.8,.27);tail.rotation.x=-1.0;g.add(tail);for(let i=0;i<3;i++)g.add(mesh(cone,mat(0x4cbb88),0,1.4-i*.25,-.33-i*.12,.14,.3,.14));
+      }else{
+        g.add(mesh(box,primary,0,.72,0,.65,.80,.48));g.add(mesh(box,mat(0x516a8b),0,.78,-.37,.45,.62,.25));g.add(mesh(sphere,white,0,1.39,0,.53,.51,.49));g.add(mesh(sphere,visor,0,1.43,.32,.39,.30,.22));for(let s of [-1,1]){g.add(mesh(sphere,primary,s*.47,.72,0,.17,.38,.19));g.add(mesh(box,primary,s*.19,.22,0,.24,.35,.28));}g.add(mesh(box,mat(0xffd06b),0,.78,.28,.25,.18,.04));
+      }
+      const pointer=new THREE.Group();pointer.add(mesh(cone,mat(0xffd133,{emissive:0x7a4900,emissiveIntensity:.3}),0,0,.23,.19,.43,.19));pointer.children[0].rotation.x=Math.PI/2;pointer.position.y=2.05;g.add(pointer);
+      const equipped=window.astroAccessory?.()||'none';
+      if(equipped!=='none'){
+        const gold=mat(0xffd453,{metalness:.5,roughness:.28}),accent=mat(0x8fe5ff,{metalness:.3});
+        if(equipped==='cap'){g.add(mesh(cyl,mat(0x386bff),0,1.92,0,.43,.25,.43));g.add(mesh(box,mat(0x386bff),0,1.82,.32,.66,.06,.32));}
+        else if(equipped==='glasses'){for(const a of [-1,1])g.add(mesh(box,mat(0x152f48,{metalness:.3}),a*.24,1.45,.52,.35,.18,.10));}
+        else if(equipped==='crown'){g.add(mesh(cyl,gold,0,2.00,0,.43,.27,.43));for(const a of [-1,0,1])g.add(mesh(cone,gold,a*.28,2.26,.1,.15,.3,.15));}
+        else if(equipped==='headphones'){g.add(mesh(sphere,accent,-.52,1.44,0,.16,.3,.24));g.add(mesh(sphere,accent,.52,1.44,0,.16,.3,.24));}
+        else if(equipped==='wings'){for(const a of [-1,1]){const wing=mesh(sphere,mat(0xf7ffff),a*.67,1.12,-.32,.45,.66,.12);wing.rotation.z=a*.4;g.add(wing)}}
+        else if(equipped==='medal'){g.add(mesh(sphere,gold,0,.92,.42,.18,.22,.08));}
+        else if(equipped==='scarf'){g.add(mesh(cyl,mat(0xed4e77),0,1.11,0,.42,.15,.40));}
+        else if(equipped==='wizard'){const wand=mesh(cyl,gold,.55,.73,.15,.05,.7,.05);wand.rotation.z=.3;g.add(wand);}
+        else if(equipped==='shield'){g.add(mesh(box,gold,-.55,.67,.35,.18,.60,.52));}
+        else if(equipped==='diamond'){g.add(mesh(new THREE.OctahedronGeometry(.24),accent,0,2.25,0));}
+        else if(equipped==='trophy'){g.add(mesh(cyl,gold,0,2.19,0,.24,.3,.24));}
+      }
+      return g;
+    }
+    // A quiet, screen-space background: no scenery meshes, floating hills,
+    // oversized clouds, or objects that can hide the educational board.
+    let backgroundTexture=null;
+    function setSoftBackdrop(world,skyColor){
+      const canvas=document.createElement('canvas');canvas.width=768;canvas.height=512;
+      const ctx=canvas.getContext('2d');
+      const palettes=[
+        ['#9cdef9','#dcf8ef','#a8d6bc'], // woodland
+        ['#b9e6ff','#f3e9e9','#b2d8ae'], // mushrooms
+        ['#f9cf9d','#fff0c9','#e9c58c'], // desert
+        ['#f8dbac','#f6edcf','#b9d9c1'], // oasis
+        ['#b8e5f9','#eefaff','#cde6f1'], // snow
+        ['#a9ccef','#f2f9ff','#c3dbea'], // ice castle
+        ['#796275','#b08b85','#786879'], // volcano
+        ['#624e68','#a27b7a','#655569'], // lava
+        ['#151b3a','#353966','#171e40'], // galaxy
+        ['#182444','#314b70','#1b2a4b']  // station
+      ];
+      const p=palettes[world];
+      const gradient=ctx.createLinearGradient(0,0,0,512);
+      gradient.addColorStop(0,p[0]);gradient.addColorStop(.62,p[1]);gradient.addColorStop(1,p[2]);
+      ctx.fillStyle=gradient;ctx.fillRect(0,0,768,512);
+      // Delicate distant horizontal atmospheric streaks; deliberately faint.
+      for(let i=0;i<8;i++){
+        const y=275+i*26,opacity=world>=8?.055:.07;
+        ctx.fillStyle=world>=8?`rgba(139,177,241,${opacity})`:`rgba(255,255,255,${opacity})`;
+        ctx.beginPath();ctx.ellipse((i*131+80)%768,y,110+i%3*30,4+i%3*2,0,0,Math.PI*2);ctx.fill();
+      }
+      if(world>=8){
+        for(let i=0;i<90;i++){
+          const x=(i*197+83)%768,y=(i*113+47)%400;
+          ctx.fillStyle=i%6===0?'rgba(135,221,255,.65)':'rgba(255,255,255,.42)';
+          ctx.beginPath();ctx.arc(x,y,i%7===0?1.3:.7,0,Math.PI*2);ctx.fill();
+        }
+      }
+      const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;
+      scene.background=texture;
+      if(backgroundTexture)backgroundTexture.dispose();backgroundTexture=texture;
+    }
+    function build(n,d,kind,color,showPath){while(root.children.length){let c=root.children[0];root.remove(c);c.traverse(o=>{if(o.geometry && ![sphere,box,cone,cyl].includes(o.geometry))o.geometry.dispose()})}
+      const w=Math.floor((n-1)/20),world=Math.floor((n-1)/10),subworld=world%2,t=themes[w],N=d.size;
+      const alternate=[
+        {ground:0x77b88a,light:0xc1e6a4,sky:0xb9d7f9},
+        {ground:0xbda17b,light:0xf1d6a0,sky:0xf8e2b6},
+        {ground:0x9ccbd5,light:0xdff8fd,sky:0xb0d9ed},
+        {ground:0x755466,light:0xc18d78,sky:0x674657},
+        {ground:0x5b70a4,light:0x9aaed6,sky:0x20294b}
+      ];
+      const palette=subworld?alternate[w]:t;
+      if(world===2){palette.ground=0xe7bb76;palette.light=0xffdfa0;palette.sky=0xfbd1a0;}
+      setSoftBackdrop(world,palette.sky);
+      scene.fog=null;
+      root.add(mesh(box,mat(world===2?0xb88b57:world===3?0xbfa16e:world>=8?0x29354f:w===4?0x2e315e:0x627b78),0,-.40,0,N+2,.62,N+2));
+      root.add(mesh(box,mat(world===2?0xecc58c:world===3?0xe0c18a:world>=8?0x42537c:w===0&&subworld===1?0x9bc49e:w===4?0x4b477b:0x98c9b6),0,-.085,0,N+1.98,.065,N+1.98));
+      // Themed trim on the outside of the floating board.
+      const trimColor=world>=8?0x70d9ef:world>=6?0xf2a26d:world>=4?0xc3edff:world>=2?0xf5d6a0:0x9ad9b1;
+      const borderMaterial=mat(trimColor,{metalness:world>=8?.35:0,roughness:.65});
+      for(const z of [-N/2-.83,N/2+.83])root.add(mesh(box,borderMaterial,0,-.03,z,N+1.7,.065,.065));
+      for(const x of [-N/2-.83,N/2+.83])root.add(mesh(box,borderMaterial,x,-.03,0,.065,.065,N+1.7));
+      for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+        const [xx,zz]=pos(x,y,N),rock=d.rocks.some(p=>p.x===x&&p.y===y);
+        const tileColor=world===8?((x+y)%2?0x454b83:0x626aa6):world===9?((x+y)%2?0x516a86:0x7991ad):((x+y)%2?palette.ground:palette.light);
+        const tile=mesh(box,mat(rock?(world>=8?0x9a536b:0xe87983):tileColor,{roughness:world>=8?.42:.82,metalness:world===9?.5:0}),xx,0,zz,.992,.30,.992);root.add(tile);const sheen=mesh(box,mat(rock?0xffadb0:0xffffff,{transparent:true,opacity:rock?.16:.10,depthWrite:false}),xx,.155,zz,.87,.012,.87);root.add(sheen);
+        // Beveled illuminated tile edge: distinct silhouettes even at distance.
+        const rimColor=world>=8?0x9edbff:world>=6?0xffba83:world>=4?0xe3faff:0xe9f6db;
+        const rim=mesh(box,mat(rock?0xffad94:rimColor,{transparent:true,opacity:rock?.55:.43,depthWrite:false}),xx,.163,zz,.955,.008,.955);
+        const inner=mesh(box,mat(rock?0xe37a78:tileColor,{roughness:.65,metalness:world===9?.48:0}),xx,.171,zz,.845,.009,.845);
+        root.add(rim,inner);
+        if(rock){
+          const foot=mesh(new THREE.CylinderGeometry(.31,.35,.065,10),mat(world>=8?0x384b6d:world>=6?0x74515b:world>=4?0x9bb9c5:world>=2?0xa97961:0x548c62,{roughness:.9}),xx,.202,zz);
+          foot.castShadow=false;root.add(foot);
+          const shadow=mesh(sphere,mat(0x253e45,{transparent:true,opacity:.17,depthWrite:false}),xx,.16,zz,.31,.014,.26);root.add(shadow);const prop=themedProp(world,.35+(x+y)%3*.035,(x*3+y+n)%4);
+          // Keep obstacle geometry centered inside its own tile.
+          prop.position.set(xx,.16,zz);root.add(prop);}
+        else if((x*7+y*11+n)%13===0){
+          if(w===0&&subworld===1){
+            root.add(mesh(sphere,mat(0xe5c0f5),xx+.31,.18,zz-.27,.065,.035,.065));
+          }else if(world>=8){
+            root.add(mesh(new THREE.OctahedronGeometry(.09),mat(world===8?0x85e9ff:0x5fe7e9,{emissive:0x147ac4,emissiveIntensity:.6}),xx+.31,.2,zz-.31));
+          }else root.add(mesh(sphere,mat(w===2?0xffffff:w===4?0xaaa1f5:0x64a06c),xx+.31,.13,zz-.31,.09,.05,.09));
+        }
+      }
+      // Scenery occupies only the platform border, never playable squares.
+      // Low props and generous separation prevent hiding routes in isometric view.
+      const [goalX,goalZ]=pos(d.goal.x,d.goal.y,N);
+      const [startX,startZ]=pos(d.start.x,d.start.y,N);
+      const safeScenery=(x,z)=>{
+        const edge=N/2+.49;
+        if(Math.abs(x)>edge||Math.abs(z)>edge)return false;
+        if(Math.abs(x)<N/2+.04&&Math.abs(z)<N/2+.04)return false;
+        if(Math.hypot(x-goalX,z-goalZ)<2.1)return false;
+        if(Math.hypot(x-startX,z-startZ)<1.45)return false;
+        return true;
+      };
+      const borderCandidates=[];
+      const offset=N/2+.31;
+      for(let j=0;j<4;j++){
+        const t=-N/2+.75+j*(N-1.5)/3;
+        borderCandidates.push([t,-offset],[t,offset],[-offset,t],[offset,t]);
+      }
+      let placed=[];
+      borderCandidates.forEach(([x,z],i)=>{
+        if((i*7+n)%3!==0||!safeScenery(x,z))return;
+        if(placed.some(([px,pz])=>Math.hypot(px-x,pz-z)<1.65))return;
+        const prop=themedProp(world,.28+(i%3)*.025,i%4);
+        prop.position.set(x,.02,z);root.add(prop);placed.push([x,z]);
+      });
+      // A few grounded rocks beyond the play area; never obscure tiles.
+      if(world===2||world===3||world===6||world===7){
+        const locations=[[-N/2-.31,-N/2-.31],[N/2+.31,N/2+.31]];
+        locations.forEach(([x,z],i)=>{
+          const stone=boulder(world>=6?0x514950:0xc5a078,i,.23);
+          stone.position.set(x,.02,z);root.add(stone);
+        });
+      }
+      // Small flat environmental accents remain grounded on the platform.
+      if(world===2||world===3){
+        [[-offset,-offset],[offset,offset]].forEach(([x,z],i)=>{
+          if(safeScenery(x,z))root.add(mesh(sphere,mat(i?0xd6a363:0xe4b675),x,.012,z,.34,.08,.22));
+        });
+      }
+      if(world>=8){
+        for(let k=0;k<38;k++){
+          const rnd=((k*37+13)%97)/97,ang=k*2.39996;
+          const x=Math.cos(ang)*(N*.85+3+rnd*6),z=Math.sin(ang)*(N*.85+3+rnd*6);
+          const y=2+((k*17)%23)*.32;
+          root.add(mesh(sphere,new THREE.MeshBasicMaterial({color:k%4===0?0x87eaff:0xffffff}),x,y,z,.035,.035,.035));
+        }
+        root.add(mesh(sphere,mat(world===8?0xb886ed:0x6b9ce8,{emissive:0x282b70,emissiveIntensity:.3}),-N*.95,4,-N*1.1,1.1,1.1,1.1));
+      }
+      function starGeometry(){
+        const shape=new THREE.Shape();
+        for(let j=0;j<10;j++){
+          const a=-Math.PI/2+j*Math.PI/5,r=j%2?.21:.42;
+          const x=Math.cos(a)*r,y=Math.sin(a)*r;
+          if(j===0)shape.moveTo(x,y);else shape.lineTo(x,y);
+        }
+        shape.closePath();
+        const geo=new THREE.ExtrudeGeometry(shape,{depth:.11,bevelEnabled:true,bevelSegments:2,steps:1,bevelSize:.035,bevelThickness:.035,curveSegments:1});
+        geo.center();return geo;
+      }
+      const starShape=starGeometry();
+      // Progress marker on the destination tile, independent of diamond animation.
+      stars=[];d.stars.forEach((s,i)=>{const [x,z]=pos(s.x,s.y,N),g=new THREE.Group();const star=mesh(starShape,mat(0xffd84d,{metalness:.34,roughness:.24,emissive:0xc8790a,emissiveIntensity:.42}),0,.60,0,.94,.94,.94);
+        star.rotation.x=-.20;g.add(star);g.position.set(x,0,z);root.add(g);stars.push({g,i})});
+      // Clear, unmistakable finish: a floating, rotating multi-faceted cyan crystal.
+      const [gx,gz]=pos(d.goal.x,d.goal.y,N);
+      goalObject=new THREE.Group();goalObject.position.set(gx,.35,gz);
+      const plinth=mesh(new THREE.CylinderGeometry(.39,.46,.15,8),mat(0x244e83,{metalness:.4,roughness:.28}),0,-.13,0);
+      goalObject.add(plinth);
+      const ring=mesh(new THREE.TorusGeometry(.39,.025,8,48),mat(0x8efaff,{emissive:0x42dfff,emissiveIntensity:.85}),0,.01,0);
+      ring.rotation.x=-Math.PI/2;goalObject.add(ring);
+      const gem=new THREE.Group();
+      const crystalMat=mat(0x29cfff,{metalness:.12,roughness:.12,emissive:0x0b92db,emissiveIntensity:.62,flatShading:true});
+      const facets=new THREE.OctahedronGeometry(.48,0);
+      const crystal=mesh(facets,crystalMat,0,.69,0,1,1.35,1);gem.add(crystal);
+      gem.add(mesh(new THREE.OctahedronGeometry(.23,0),mat(0xe8ffff,{emissive:0x64eaff,emissiveIntensity:1.4,transparent:true,opacity:.77}),-.09,.81,.27,.58,.8,.40));
+      goalHalo=null;goalObject.add(gem);
+      goalRays=[];
+      goalObject.userData.gem=gem;
+      root.add(goalObject);
+      impactRing=mesh(new THREE.TorusGeometry(.43,.09,8,28),mat(0xff3e4d,{emissive:0xff2438,emissiveIntensity:1}),0,.25,0);impactRing.rotation.x=-Math.PI/2;impactRing.visible=false;root.add(impactRing);const [sx,sz]=pos(d.start.x,d.start.y,N);hero=makeHero(kind,color);heroLastFrame=0;hero.scale.setScalar(.72);hero.position.set(sx,.12,sz);root.add(hero);
+      if(showPath){const points=d.path.map(p=>{const [x,z]=pos(p.x,p.y,N);return new THREE.Vector3(x,.23,z)});if(points.length>1){const geo=new THREE.BufferGeometry().setFromPoints(points);const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:0x8b6a3d,transparent:true,opacity:.38}));root.add(line);}}
+      const aspect=host.clientWidth/Math.max(1,host.clientHeight);const extent=N*.61+1.0;camera.left=-extent*aspect;camera.right=extent*aspect;camera.top=extent;camera.bottom=-extent;camera.updateProjectionMatrix();camera.position.set(N*.9,N*1.5,N*1.7);camera.lookAt(0,.15,0);
+      lastKey=[n,kind,color,showPath,window.astroAccessory?.()||'none'].join('|');currentLevel=n;staticData=d;
+    }
+    function frame(n,d,heroPos,coll,kind,color,path,now){const key=[n,kind,color,path,window.astroAccessory?.()||'none'].join('|');if(key!==lastKey)build(n,d,kind,color,path);
+      if(hero){const [x,z]=pos(heroPos.x,heroPos.y,d.size);const dt=Math.min(.09,Math.max(0,(now-heroLastFrame)/1000));heroLastFrame=now;
+        const speed=1-Math.exp(-dt*14);
+        hero.position.x+=(x-hero.position.x)*speed;hero.position.z+=(z-hero.position.z)*speed;
+        hero.position.y=.13+Math.sin(now*.006)*.045;
+        const target=[Math.PI,Math.PI/2,0,-Math.PI/2][heroPos.d||0];
+        hero.rotation.y+=Math.atan2(Math.sin(target-hero.rotation.y),Math.cos(target-hero.rotation.y))*speed;}
+      stars.forEach(({g,i})=>{g.visible=!coll.includes(i);g.rotation.y=now*.0015;g.position.y=Math.sin(now*.003+i)*.12});
+      if(goalObject){
+        goalObject.userData.gem.rotation.y=now*.00115;
+        if(goalObject.userData.beacon)goalObject.userData.beacon.rotation.z=now*.00035;
+        goalObject.userData.gem.position.y=Math.sin(now*.002)*.12;
+        if(goalHalo)goalHalo.scale.setScalar(.92+Math.sin(now*.003)*.08);
+        goalRays.forEach((spark,i)=>{spark.position.y=.70+(i%2)*.28+Math.sin(now*.003+i)*.12;spark.rotation.y=now*.0015});
+      }if(impactRing){const hit=window.astroImpact?.();const visible=hit&&now-hit.started<850;impactRing.visible=!!visible;if(visible){const [ix,iz]=pos(hit.x,hit.y,d.size);impactRing.position.set(ix,.24,iz);const t=(now-hit.started)/850;impactRing.scale.setScalar(.7+t*1.4);impactRing.material.opacity=1-t;impactRing.material.transparent=true;}}
+      if(host.clientWidth && host.clientHeight){const width=Math.round(host.clientWidth),height=Math.round(host.clientHeight);if(renderer.domElement.width!==Math.round(width*renderer.getPixelRatio())||renderer.domElement.height!==Math.round(height*renderer.getPixelRatio()))renderer.setSize(width,height,false)}
+      renderer.render(scene,camera);
+    }
+    return {frame,canvas:renderer.domElement};
+  }
+  const gameCanvas=document.getElementById('canvas');const gameHost=document.createElement('div');gameHost.className='astro-3d-view';gameCanvas.parentElement.appendChild(gameHost);gameCanvas.style.display='none';
+  const teacherCanvas=document.getElementById('teacher-canvas');const teacherHost=document.createElement('div');teacherHost.className='astro-3d-teacher';teacherCanvas.parentElement.insertBefore(teacherHost,teacherCanvas);teacherCanvas.style.display='none';
+  let game,teacher;try{game=createView(gameHost);teacher=createView(teacherHost)}catch(e){console.error('3D initialization failed',e);gameCanvas.style.display='block';teacherCanvas.style.display='block';gameHost.remove();teacherHost.remove();return}
+  document.getElementById('stage-3d')?.classList.add('real-webgl');
+  const viewButton=document.getElementById('view-toggle');
+  if(viewButton){viewButton.textContent='🎮 Πραγματικό 3D';viewButton.disabled=true;viewButton.title='Τρισδιάστατη προβολή WebGL ενεργή';}
+  function animate(now){try{const p=player();if(data)game.frame(level,data,position,collected,p?.hero||'astronaut',p?.suit||'classic',false,now);
+      if(document.getElementById('teacher-modal').classList.contains('open')){const n=teacherSelected,d=makeLevel(n);teacher.frame(n,d,{...d.start,d:0},[],p?.hero||'astronaut',p?.suit||'classic',document.getElementById('teacher-path').checked,now)}
+    }catch(e){console.error('3D render error',e)}requestAnimationFrame(animate)}requestAnimationFrame(animate);
+})();
+</script></body></html>
